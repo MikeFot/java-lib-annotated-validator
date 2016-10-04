@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.annotated;
+package com.michaelfotiadis.validator.annotated.parser;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.Category;

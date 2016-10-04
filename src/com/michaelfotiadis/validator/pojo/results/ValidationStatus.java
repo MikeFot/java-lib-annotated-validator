@@ -10,6 +10,8 @@ public enum ValidationStatus {
     EMPTY_COLLECTION,
     EMPTY_STRING,
     INVALID_VALUE,
+    NUMBER_OUT_OF_RANGE,
+    EXCEPTION,
     SUCCESS
 
 }

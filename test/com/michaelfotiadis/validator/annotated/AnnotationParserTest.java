@@ -2,6 +2,7 @@ package com.michaelfotiadis.validator.annotated;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.integer.IntegerMinValue;
+import com.michaelfotiadis.validator.annotated.parser.AnnotationParser;
 
 import org.junit.Test;
 
