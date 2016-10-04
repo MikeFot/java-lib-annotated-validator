@@ -1,5 +1,8 @@
 package com.michaelfotiadis.validator.annotated;
 
+import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
+import com.michaelfotiadis.validator.annotated.annotations.Category;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -73,13 +76,27 @@ public final class AnnotationParser {
      * @return true if annotation exists in class or superclass
      */
     public static boolean containsAnnotation(final Class<?> type, final Class annotationType) {
+        return getAnnotation(type, annotationType) != null;
+    }
 
+    public static Annotation getAnnotation(final Class<?> type, final Class annotationType) {
         for (final Field f : getDeclaredFields(type)) {
             if (f.getAnnotation(annotationType) != null) {
-                return true;
+                return f.getAnnotation(annotationType);
             }
         }
-        return false;
+        return null;
+    }
+
+    public static AnnotationCategory getCategoryOfAnnotation(final Annotation annotation) {
+
+        final Category category = annotation.annotationType().getAnnotation(Category.class);
+
+        if (category != null) {
+            return category.type();
+        } else {
+            return AnnotationCategory.UNUSED;
+        }
 
     }
 

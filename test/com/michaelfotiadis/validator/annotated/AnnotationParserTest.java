@@ -1,10 +1,15 @@
 package com.michaelfotiadis.validator.annotated;
 
-import com.michaelfotiadis.validator.annotated.annotations.IntegerMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
+import com.michaelfotiadis.validator.annotated.annotations.integer.IntegerMinValue;
 
 import org.junit.Test;
 
+import java.lang.annotation.Annotation;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -29,6 +34,20 @@ public class AnnotationParserTest {
 
     }
 
+    @Test
+    public void getCategoryOfAnnotation() throws Exception {
+
+        TestInteger testInteger = new TestInteger();
+
+        Annotation annotation = AnnotationParser.getAnnotation(testInteger.getClass(), IntegerMinValue.class);
+
+        assertNotNull(annotation);
+
+        AnnotationCategory category = AnnotationParser.getCategoryOfAnnotation(annotation);
+
+        assertEquals(AnnotationCategory.INTEGER, category);
+
+    }
     @SuppressWarnings("InnerClassMayBeStatic")
     private abstract class BaseTestInteger {
         @IntegerMinValue(1)

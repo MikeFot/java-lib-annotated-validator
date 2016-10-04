@@ -1,6 +1,7 @@
-package com.michaelfotiadis.validator.annotated.annotations;
+package com.michaelfotiadis.validator.annotated;
 
-import com.michaelfotiadis.validator.annotated.SupportedAnnotationContainer;
+import com.michaelfotiadis.validator.annotated.annotations.integer.IntegerMaxValue;
+import com.michaelfotiadis.validator.annotated.annotations.integer.IntegerMinValue;
 
 import org.junit.Test;
 
@@ -26,5 +27,6 @@ public class SupportedAnnotationContainerTest {
     public void getSupportedClasses() throws Exception {
         assertNotEquals(0, SupportedAnnotationContainer.getSupportedClasses());
     }
+
 
 }
