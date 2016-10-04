@@ -58,10 +58,10 @@ public class ValidatorProcessorImplTest {
 
         assertNotNull(validator);
 
-        assertFalse("Should have been invalid", validator.validate(""));
-        assertFalse("Should have been invalid", validator.validate(null));
-        assertTrue("Should have been valid", validator.validate("ValidString"));
-        assertTrue("Should have been valid", validator.validate("anotherValidOne"));
+        assertFalse("Should have been invalid", validator.validate("").isValid());
+        assertFalse("Should have been invalid", validator.validate(null).isValid());
+        assertTrue("Should have been valid", validator.validate("ValidString").isValid());
+        assertTrue("Should have been valid", validator.validate("anotherValidOne").isValid());
     }
 
     @Test

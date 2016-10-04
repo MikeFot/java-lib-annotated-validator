@@ -1,5 +1,8 @@
 package com.michaelfotiadis.validator.pojo.common.text;
 
+import com.michaelfotiadis.validator.pojo.results.ValidationResult;
+import com.michaelfotiadis.validator.pojo.results.ValidationStatus;
+
 /**
  *
  */
@@ -11,11 +14,15 @@ public class MaxLengthValidator implements StringValidator {
     }
 
     @Override
-    public boolean validate(final String input) {
+    public ValidationResult validate(final String input) {
+
         if (input == null) {
-            return false;
+            return new ValidationResult(ValidationStatus.NULL_VALUE);
+        } else if (input.length() <= maxLength) {
+            return new ValidationResult(ValidationStatus.SUCCESS);
         } else {
-            return input.length() <= maxLength;
+            return new ValidationResult(ValidationStatus.INVALID_VALUE);
         }
+
     }
 }

@@ -23,17 +23,17 @@ public class MinLengthValidatorTest {
 
     @Test
     public void testValidateInValid() throws Exception {
-        assertFalse(mValidator.validate("a"));
-        assertFalse(mValidator.validate(" "));
-        assertFalse(mValidator.validate(""));
-        assertFalse(mValidator.validate(null));
+        assertFalse(mValidator.validate("a").isValid());
+        assertFalse(mValidator.validate(" ").isValid());
+        assertFalse(mValidator.validate("").isValid());
+        assertFalse(mValidator.validate(null).isValid());
     }
 
     @Test
     public void testValidateValid() throws Exception {
-        assertTrue(mValidator.validate("  "));
-        assertTrue(mValidator.validate("aa"));
-        assertTrue(mValidator.validate("   "));
-        assertTrue(mValidator.validate("aaa"));
+        assertTrue(mValidator.validate("  ").isValid());
+        assertTrue(mValidator.validate("aa").isValid());
+        assertTrue(mValidator.validate("   ").isValid());
+        assertTrue(mValidator.validate("aaa").isValid());
     }
 }

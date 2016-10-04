@@ -1,5 +1,8 @@
 package com.michaelfotiadis.validator.pojo.common.text;
 
+import com.michaelfotiadis.validator.pojo.results.ValidationResult;
+import com.michaelfotiadis.validator.pojo.results.ValidationStatus;
+
 import java.util.regex.Pattern;
 
 /**
@@ -39,13 +42,19 @@ public class UrlValidator implements StringValidator {
     // matching as foo.su
 
     @Override
-    public boolean validate(final String input) {
+    public ValidationResult validate(final String input) {
 
-        final NotEmptyValidator notEmptyValidator = new NotEmptyValidator();
-        if (notEmptyValidator.validate(input)) {
-            return PATTERN.matcher(input).matches();
+        final ValidationResult notEmptyResult = new NotEmptyValidator().validate(input);
+
+        if (notEmptyResult.isValid()) {
+            if (PATTERN.matcher(input).matches()) {
+                return new ValidationResult(ValidationStatus.SUCCESS);
+            } else {
+                return new ValidationResult(ValidationStatus.INVALID_VALUE);
+            }
         } else {
-            return false;
+            return notEmptyResult;
         }
+
     }
 }

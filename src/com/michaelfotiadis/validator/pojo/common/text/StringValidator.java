@@ -1,10 +1,13 @@
 package com.michaelfotiadis.validator.pojo.common.text;
 
 import com.michaelfotiadis.validator.pojo.Validator;
+import com.michaelfotiadis.validator.pojo.results.ValidationResult;
 
 /**
  *
  */
 public interface StringValidator extends Validator<String> {
-    boolean validate(final String input);
+
+    ValidationResult validate(final String input);
+
 }

@@ -1,9 +1,13 @@
 package com.michaelfotiadis.validator.pojo;
 
 
+import com.michaelfotiadis.validator.pojo.results.ValidationResult;
+
 /**
  *
  */
 public interface Validator<T> {
-    boolean validate(T item);
+
+    ValidationResult validate(T item);
+
 }

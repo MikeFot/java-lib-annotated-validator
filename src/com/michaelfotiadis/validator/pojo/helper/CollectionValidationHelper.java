@@ -16,12 +16,12 @@ public final class CollectionValidationHelper extends CommonObjectValidationHelp
     }
 
     public boolean isNotNullOrEmpty(final Collection collection) {
-        return new IsNotNullOrEmptyValidator().validate(collection);
+        return new IsNotNullOrEmptyValidator().validate(collection).isValid();
     }
 
 
     public boolean hasNonNulls(final Collection collection) {
-        return new ContainsNoNullsValidator().validate(collection);
+        return new ContainsNoNullsValidator().validate(collection).isValid();
     }
 
     public boolean isPopulatedAndHasNoNulls(final Collection collection) {

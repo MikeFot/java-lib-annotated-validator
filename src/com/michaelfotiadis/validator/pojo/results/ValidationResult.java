@@ -5,24 +5,44 @@ package com.michaelfotiadis.validator.pojo.results;
  */
 public class ValidationResult {
 
-    private final String mError;
-    private final boolean mIsValid;
+    private final ValidationStatus status;
 
-    public ValidationResult(final boolean isValid, final String error) {
-        this.mError = error;
-        this.mIsValid = isValid;
+    public ValidationResult(final ValidationStatus status) {
+        this.status = status;
     }
 
     public ValidationResult(final boolean isValid) {
-        this.mError = null;
-        this.mIsValid = isValid;
+        if (isValid) {
+            this.status = ValidationStatus.SUCCESS;
+        } else {
+            this.status = ValidationStatus.UNDEFINED_FAILURE;
+        }
     }
 
-    public String getError() {
-        return mError;
+    /**
+     * Static factory
+     *
+     * @return successful {@link ValidationResult}
+     */
+    public static ValidationResult success() {
+        return new ValidationResult(ValidationStatus.SUCCESS);
+    }
+
+    /**
+     * Static factory
+     *
+     * @return failed {@link ValidationResult}
+     */
+    public static ValidationResult failure() {
+        return new ValidationResult(ValidationStatus.UNDEFINED_FAILURE);
+    }
+
+    public ValidationStatus getStatus() {
+        return this.status;
     }
 
     public boolean isValid() {
-        return mIsValid;
+        return this.status == ValidationStatus.SUCCESS;
     }
+
 }

@@ -1,5 +1,8 @@
 package com.michaelfotiadis.validator.pojo.common.text;
 
+import com.michaelfotiadis.validator.pojo.results.ValidationResult;
+import com.michaelfotiadis.validator.pojo.results.ValidationStatus;
+
 import java.util.regex.Pattern;
 
 public class EmailValidator implements StringValidator {
@@ -11,11 +14,19 @@ public class EmailValidator implements StringValidator {
     private static final Pattern PATTERN = Pattern.compile(EMAIL_PATTERN_STRING);
 
     @Override
-    public boolean validate(final String input) {
-        if (input == null || input.isEmpty()) {
-            return false;
+    public ValidationResult validate(final String input) {
+
+        final ValidationResult notEmptyResult = new NotEmptyValidator().validate(input);
+
+        if (notEmptyResult.isValid()) {
+            if (PATTERN.matcher(input).matches()) {
+                return new ValidationResult(ValidationStatus.SUCCESS);
+            } else {
+                return new ValidationResult(ValidationStatus.INVALID_VALUE);
+            }
         } else {
-            return PATTERN.matcher(input).matches();
+            return notEmptyResult;
         }
+
     }
 }

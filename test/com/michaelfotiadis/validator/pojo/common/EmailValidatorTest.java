@@ -49,14 +49,14 @@ public class EmailValidatorTest {
     @Test
     public void testValidateInValid() throws Exception {
         for (final String string : INVALID_DATA) {
-            assertFalse("This should NOT have validated: '" + string + "'", mValidator.validate(string));
+            assertFalse("This should NOT have validated: '" + string + "'", mValidator.validate(string).isValid());
         }
     }
 
     @Test
     public void testValidateValid() throws Exception {
         for (final String string : VALID_DATA) {
-            assertTrue("This should have validated: '" + string + "'", mValidator.validate(string));
+            assertTrue("This should have validated: '" + string + "'", mValidator.validate(string).isValid());
         }
     }
 

@@ -1,6 +1,8 @@
 package com.michaelfotiadis.validator.pojo.processor;
 
 import com.michaelfotiadis.validator.pojo.Validator;
+import com.michaelfotiadis.validator.pojo.results.ValidationResult;
+import com.michaelfotiadis.validator.pojo.results.ValidationStatus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,13 +31,7 @@ public final class ValidatorProcessorImpl implements ValidatorProcessor {
 
     @Override
     public <T> boolean validate(final T item) {
-        if (item == null) {
-            return false;
-        } else if (canHandle(item.getClass())) {
-            return getValidator(item.getClass()).validate(item);
-        } else {
-            throw new UnsupportedOperationException("No validator registered for item " + item.getClass());
-        }
+        return getResult(item).isValid();
     }
 
     @Override
@@ -46,6 +42,16 @@ public final class ValidatorProcessorImpl implements ValidatorProcessor {
     @Override
     public void clear() {
         mValidators.clear();
+    }
+
+    public <T> ValidationResult getResult(final T item) {
+        if (item == null) {
+            return new ValidationResult(ValidationStatus.NULL_VALUE);
+        } else if (canHandle(item.getClass())) {
+            return getValidator(item.getClass()).validate(item);
+        } else {
+            throw new UnsupportedOperationException("No validator registered for item " + item.getClass());
+        }
     }
 
 }

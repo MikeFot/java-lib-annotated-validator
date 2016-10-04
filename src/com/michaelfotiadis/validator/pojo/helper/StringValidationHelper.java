@@ -11,11 +11,11 @@ import com.michaelfotiadis.validator.pojo.common.text.UrlValidator;
 public class StringValidationHelper extends CommonObjectValidationHelper {
 
     public boolean hasMaxLength(final String input, final int maxLength) {
-        return new MaxLengthValidator(maxLength).validate(input);
+        return new MaxLengthValidator(maxLength).validate(input).isValid();
     }
 
     public boolean hasMinLength(final String input, final int minLength) {
-        return new MinLengthValidator(minLength).validate(input);
+        return new MinLengthValidator(minLength).validate(input).isValid();
     }
 
     public boolean hasLengthBetween(final String input, final int minLength, final int maxLength) {
@@ -27,11 +27,11 @@ public class StringValidationHelper extends CommonObjectValidationHelper {
     }
 
     public boolean isEmail(final String input) {
-        return new EmailValidator().validate(input);
+        return new EmailValidator().validate(input).isValid();
     }
 
     public boolean isUrl(final String input) {
-        return new UrlValidator().validate(input);
+        return new UrlValidator().validate(input).isValid();
     }
 
 }

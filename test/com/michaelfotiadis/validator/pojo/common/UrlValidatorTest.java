@@ -64,7 +64,7 @@ public class UrlValidatorTest {
     @Test
     public void testValidateInValid() throws Exception {
         for (final String string : INVALID_DATA) {
-            assertFalse("This should NOT have validated: '" + string + "'", mValidator.validate(string));
+            assertFalse("This should NOT have validated: '" + string + "'", mValidator.validate(string).isValid());
         }
     }
 
@@ -73,7 +73,7 @@ public class UrlValidatorTest {
         for (final String string : VALID_DATA) {
             for (final String prefix : VALID_PREFIX) {
                 final String url = prefix + string;
-                assertTrue("This should have validated: '" + url + "'", mValidator.validate(url));
+                assertTrue("This should have validated: '" + url + "'", mValidator.validate(url).isValid());
             }
 
         }

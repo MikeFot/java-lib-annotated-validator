@@ -23,14 +23,14 @@ public class NotEmptyValidatorTest {
 
     @Test
     public void testValidateInValid() throws Exception {
-        assertFalse(mValidator.validate(null));
-        assertFalse(mValidator.validate(""));
+        assertFalse(mValidator.validate(null).isValid());
+        assertFalse(mValidator.validate("").isValid());
     }
 
     @Test
     public void testValidateValid() throws Exception {
-        assertTrue(mValidator.validate("!"));
-        assertTrue(mValidator.validate("a"));
-        assertTrue(mValidator.validate(" "));
+        assertTrue(mValidator.validate("!").isValid());
+        assertTrue(mValidator.validate("a").isValid());
+        assertTrue(mValidator.validate(" ").isValid());
     }
 }
