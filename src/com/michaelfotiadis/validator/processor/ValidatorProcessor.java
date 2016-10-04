@@ -13,7 +13,7 @@ public interface ValidatorProcessor {
 
     <T> boolean validate(T item);
 
-    <T> void register(Class<T> clazz, Validator<T> validator);
+    void register(Class<?> clazz, Validator<?> validator);
 
     void clear();
 

@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.common;
+package com.michaelfotiadis.validator.common.text;
 
 /**
  *

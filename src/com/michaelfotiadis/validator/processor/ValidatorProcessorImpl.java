@@ -39,7 +39,7 @@ public final class ValidatorProcessorImpl implements ValidatorProcessor {
     }
 
     @Override
-    public <T> void register(final Class<T> clazz, final Validator<T> validator) {
+    public void register(final Class<?> clazz, final Validator<?> validator) {
         mValidators.put(clazz, validator);
     }
 

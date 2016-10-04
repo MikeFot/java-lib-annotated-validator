@@ -1,10 +1,10 @@
 package com.michaelfotiadis.validator.processor;
 
 import com.michaelfotiadis.validator.Validator;
-import com.michaelfotiadis.validator.common.CollectionValidator;
-import com.michaelfotiadis.validator.common.ContainsNoNulls;
-import com.michaelfotiadis.validator.common.NotEmptyValidator;
-import com.michaelfotiadis.validator.common.StringValidator;
+import com.michaelfotiadis.validator.common.collection.CollectionValidator;
+import com.michaelfotiadis.validator.common.collection.ContainsNoNullsValidator;
+import com.michaelfotiadis.validator.common.text.NotEmptyValidator;
+import com.michaelfotiadis.validator.common.text.StringValidator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class ValidatorProcessorImplTest {
     public void setUp() throws Exception {
         mProcessor = new ValidatorProcessorImpl();
         mProcessor.register(String.class, new NotEmptyValidator());
-        mProcessor.register(Collection.class, new ContainsNoNulls());
+        mProcessor.register(Collection.class, new ContainsNoNullsValidator());
     }
 
     @Test

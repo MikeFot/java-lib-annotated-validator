@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.common;
+package com.michaelfotiadis.validator.common.base;
 
 import com.michaelfotiadis.validator.Validator;
 

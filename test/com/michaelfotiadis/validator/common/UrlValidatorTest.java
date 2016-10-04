@@ -1,5 +1,8 @@
 package com.michaelfotiadis.validator.common;
 
+import com.michaelfotiadis.validator.common.text.StringValidator;
+import com.michaelfotiadis.validator.common.text.UrlValidator;
+
 import org.junit.Before;
 import org.junit.Test;
 
