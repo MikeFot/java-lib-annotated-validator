@@ -11,6 +11,9 @@ public enum ValidationStatus {
     EMPTY_STRING,
     INVALID_VALUE,
     NUMBER_OUT_OF_RANGE,
+    INTEGER_OUT_OF_RANGE,
+    DOUBLE_OUT_OF_RANGE,
+    FLOAT_OUT_OF_RANGE,
     EXCEPTION,
     SUCCESS
 
