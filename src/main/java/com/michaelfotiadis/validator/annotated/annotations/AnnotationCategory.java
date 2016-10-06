@@ -7,9 +7,10 @@ package com.michaelfotiadis.validator.annotated.annotations;
 public enum AnnotationCategory {
 
     UNUSED,
-    OBJECT,
+    GENERIC,
     INTEGER,
     DOUBLE,
-    FLOAT
+    FLOAT,
+    SHORT
 
 }

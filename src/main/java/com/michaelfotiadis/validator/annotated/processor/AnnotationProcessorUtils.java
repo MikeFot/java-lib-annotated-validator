@@ -1,7 +1,7 @@
 package com.michaelfotiadis.validator.annotated.processor;
 
-import com.michaelfotiadis.validator.pojo.results.ValidationResult;
-import com.michaelfotiadis.validator.pojo.results.ValidationStatus;
+import com.michaelfotiadis.validator.annotated.model.ValidationResult;
+import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 
 import java.util.ArrayList;
 import java.util.List;

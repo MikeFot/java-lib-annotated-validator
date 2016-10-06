@@ -1,12 +1,12 @@
 package com.michaelfotiadis.validator.annotated.processor;
 
-import com.michaelfotiadis.validator.annotated.ValidationResultContainer;
-import com.michaelfotiadis.validator.annotated.annotations.number.DoubleMaxValue;
-import com.michaelfotiadis.validator.annotated.annotations.number.DoubleMinValue;
-import com.michaelfotiadis.validator.annotated.annotations.number.IntegerEqualsValue;
-import com.michaelfotiadis.validator.annotated.annotations.number.IntegerMaxValue;
-import com.michaelfotiadis.validator.annotated.annotations.number.IntegerMinValue;
-import com.michaelfotiadis.validator.pojo.results.ValidationStatus;
+import com.michaelfotiadis.validator.annotated.ValidationResultsContainer;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenumber.DoubleMaxValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenumber.DoubleMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernumber.IntegerEqualsValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernumber.IntegerMaxValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernumber.IntegerMinValue;
+import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class AnnotatedValidatorProcessorTest {
     public void testIntegerMinOutOfRange() throws Exception {
         final SampleNumber item = new SampleNumber();
         item.testIntegerMinMax = INTEGER_MIN - 1;
-        final ValidationResultContainer result = processor.validate(item);
+        final ValidationResultsContainer result = processor.validate(item);
         assertFalse(result.isValid());
         final Set<ValidationStatus> statuses = result.getFailedStatuses();
         assertEquals(1, statuses.size());
@@ -50,7 +50,7 @@ public class AnnotatedValidatorProcessorTest {
     public void testIntegerNullValue() throws Exception {
         final SampleNumber item = new SampleNumber();
         item.testIntegerMinMax = null;
-        final ValidationResultContainer result = processor.validate(item);
+        final ValidationResultsContainer result = processor.validate(item);
         assertFalse(result.isValid());
 
         final Set<ValidationStatus> statuses = result.getFailedStatuses();
@@ -62,7 +62,7 @@ public class AnnotatedValidatorProcessorTest {
     public void testIntegerNotEquals() throws Exception {
         final SampleNumber item = new SampleNumber();
         item.testIntegerEquals = 36;
-        final ValidationResultContainer result = processor.validate(item);
+        final ValidationResultsContainer result = processor.validate(item);
         assertFalse(result.isValid());
 
         final Set<ValidationStatus> statuses = result.getFailedStatuses();
@@ -73,7 +73,7 @@ public class AnnotatedValidatorProcessorTest {
     @Test
     public void testAllValuesInRange() throws Exception {
         final SampleNumber item = new SampleNumber();
-        final ValidationResultContainer result = processor.validate(item);
+        final ValidationResultsContainer result = processor.validate(item);
         assertTrue(result.isValid());
         final Set<ValidationStatus> statuses1 = result.getFailedStatuses();
         assertEquals(0, statuses1.size());
@@ -82,7 +82,7 @@ public class AnnotatedValidatorProcessorTest {
     @Test
     public void testAllValuesInRangeForExtendedClass() throws Exception {
         final SampleExtendedNumber item = new SampleExtendedNumber();
-        final ValidationResultContainer result = processor.validate(item);
+        final ValidationResultsContainer result = processor.validate(item);
         assertTrue(result.isValid());
         final Set<ValidationStatus> statuses1 = result.getFailedStatuses();
         assertEquals(0, statuses1.size());
@@ -92,7 +92,7 @@ public class AnnotatedValidatorProcessorTest {
     public void testDoubleMaxValueOutOfRange() throws Exception {
         final SampleNumber item = new SampleNumber();
         item.testDoubleMax = Double.MAX_VALUE;
-        final ValidationResultContainer result = processor.validate(item);
+        final ValidationResultsContainer result = processor.validate(item);
         assertFalse(result.isValid());
 
         final Set<ValidationStatus> statuses = result.getFailedStatuses();
@@ -104,7 +104,7 @@ public class AnnotatedValidatorProcessorTest {
     public void testDoubleMaxValueOutOfRangeForExtendedClass() throws Exception {
         final SampleExtendedNumber item = new SampleExtendedNumber();
         item.testDoubleMax = Double.MAX_VALUE;
-        final ValidationResultContainer result = processor.validate(item);
+        final ValidationResultsContainer result = processor.validate(item);
         assertFalse(result.isValid());
 
         final Set<ValidationStatus> statuses = result.getFailedStatuses();
@@ -116,7 +116,7 @@ public class AnnotatedValidatorProcessorTest {
     public void testDoubleMaxValueInRange() throws Exception {
         final SampleNumber item = new SampleNumber();
         item.testDoubleMax = DOUBLE_MAX / 2d;
-        final ValidationResultContainer result = processor.validate(item);
+        final ValidationResultsContainer result = processor.validate(item);
         assertTrue(result.isValid());
 
         final Set<ValidationStatus> statuses = result.getFailedStatuses();

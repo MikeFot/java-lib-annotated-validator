@@ -1,7 +1,7 @@
 package com.michaelfotiadis.validator.annotated;
 
-import com.michaelfotiadis.validator.annotated.annotations.number.IntegerMaxValue;
-import com.michaelfotiadis.validator.annotated.annotations.number.IntegerMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernumber.IntegerMaxValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernumber.IntegerMinValue;
 
 import org.junit.Test;
 
