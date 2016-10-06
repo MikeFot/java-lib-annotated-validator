@@ -11,6 +11,7 @@ public enum AnnotationCategory {
     INTEGER,
     DOUBLE,
     FLOAT,
-    SHORT
+    SHORT,
+    STRING
 
 }

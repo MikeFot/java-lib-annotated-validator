@@ -5,12 +5,13 @@ import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.model.ValidationResult;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.parser.AnnotationParser;
-import com.michaelfotiadis.validator.annotated.processor.validators.ObjectValidator;
-import com.michaelfotiadis.validator.annotated.processor.validators.Validator;
-import com.michaelfotiadis.validator.annotated.processor.validators.numeric.DoubleValidator;
-import com.michaelfotiadis.validator.annotated.processor.validators.numeric.FloatValidator;
-import com.michaelfotiadis.validator.annotated.processor.validators.numeric.IntegerValidator;
-import com.michaelfotiadis.validator.annotated.processor.validators.numeric.ShortValidator;
+import com.michaelfotiadis.validator.annotated.validators.Validator;
+import com.michaelfotiadis.validator.annotated.validators.general.ObjectValidator;
+import com.michaelfotiadis.validator.annotated.validators.numeric.DoubleValidator;
+import com.michaelfotiadis.validator.annotated.validators.numeric.FloatValidator;
+import com.michaelfotiadis.validator.annotated.validators.numeric.IntegerValidator;
+import com.michaelfotiadis.validator.annotated.validators.numeric.ShortValidator;
+import com.michaelfotiadis.validator.annotated.validators.text.StringValidator;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -24,7 +25,7 @@ import java.util.Map;
  */
 public final class AnnotatedValidatorProcessor {
 
-    private final Map<AnnotationCategory, Validator> mValidatorMap;
+    private final Map<AnnotationCategory, Validator<?>> mValidatorMap;
 
     public AnnotatedValidatorProcessor() {
         mValidatorMap = new HashMap<>();
@@ -33,6 +34,7 @@ public final class AnnotatedValidatorProcessor {
         mValidatorMap.put(AnnotationCategory.SHORT, new ShortValidator());
         mValidatorMap.put(AnnotationCategory.FLOAT, new FloatValidator());
         mValidatorMap.put(AnnotationCategory.DOUBLE, new DoubleValidator());
+        mValidatorMap.put(AnnotationCategory.STRING, new StringValidator());
 
     }
 
@@ -44,12 +46,15 @@ public final class AnnotatedValidatorProcessor {
 
         for (final Field field : fields) {
             try {
+                field.setAccessible(true);
                 final List<ValidationResult> results = validateField(item, field);
                 if (!AnnotationProcessorUtils.areAllResultsValid(results)) {
                     result.put(getHumanName(item, field), AnnotationProcessorUtils.getFailures(results));
                 }
             } catch (final IllegalAccessException e) {
                 result.put(getHumanName(item, field), ValidationStatus.EXCEPTION);
+            } finally {
+                field.setAccessible(false);
             }
         }
 
@@ -63,7 +68,7 @@ public final class AnnotatedValidatorProcessor {
                 item.getClass().getName());
     }
 
-    public <T> List<ValidationResult> validateField(final T item, final Field field) throws IllegalAccessException {
+    private <T> List<ValidationResult> validateField(final T item, final Field field) throws IllegalAccessException {
 
         final Annotation[] annotations = field.getDeclaredAnnotations();
         final List<ValidationResult> results = new ArrayList<>();
@@ -76,12 +81,13 @@ public final class AnnotatedValidatorProcessor {
                 final Object o = field.get(item);
 
                 if (mValidatorMap.containsKey(category)) {
+
+                    final Validator validator = mValidatorMap.get(category);
                     //noinspection unchecked
-                    result = mValidatorMap.get(category).validate(o, annotation);
+                    result = validator.validate(o, annotation);
                 } else {
                     result = ValidationResult.success();
                 }
-
 
                 results.add(result);
             }
