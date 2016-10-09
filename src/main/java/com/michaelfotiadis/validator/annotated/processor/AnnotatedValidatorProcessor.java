@@ -32,7 +32,7 @@ public final class AnnotatedValidatorProcessor {
     public AnnotatedValidatorProcessor() {
 
         mValidatorMap = new HashMap<>();
-        mValidatorMap.put(AnnotationCategory.GENERIC, new ObjectValidator());
+        mValidatorMap.put(AnnotationCategory.GENERAL, new ObjectValidator());
         mValidatorMap.put(AnnotationCategory.BYTE, new ByteValidator());
         mValidatorMap.put(AnnotationCategory.INTEGER, new IntegerValidator());
         mValidatorMap.put(AnnotationCategory.SHORT, new ShortValidator());

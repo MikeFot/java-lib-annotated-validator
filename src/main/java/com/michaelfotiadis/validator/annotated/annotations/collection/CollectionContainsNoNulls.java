@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.annotated.annotations.numeric.shortnum;
+package com.michaelfotiadis.validator.annotated.annotations.collection;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.Category;
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Category(type = AnnotationCategory.SHORT)
-public @interface ShortMaxValue {
-    short value();
+@Category(type = AnnotationCategory.COLLECTION)
+public @interface CollectionContainsNoNulls {
+
 }

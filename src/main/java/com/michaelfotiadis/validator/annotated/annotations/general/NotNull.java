@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Category(type = AnnotationCategory.GENERIC)
+@Category(type = AnnotationCategory.GENERAL)
 public @interface NotNull {
 
 }

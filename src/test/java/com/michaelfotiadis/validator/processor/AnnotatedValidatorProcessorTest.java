@@ -5,7 +5,7 @@ import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.Dou
 import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleMinValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerEqualsValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerMaxValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.lIntegerMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerMinValue;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.processor.AnnotatedValidatorProcessor;
 
@@ -131,7 +131,7 @@ public class AnnotatedValidatorProcessorTest {
     @SuppressWarnings({"InnerClassMayBeStatic", "ClassWithOnlyPrivateConstructors"})
     public class SampleNumber {
         @IntegerMaxValue(INTEGER_MAX)
-        @lIntegerMinValue(INTEGER_MIN)
+        @IntegerMinValue(INTEGER_MIN)
         Integer testIntegerMinMax;
         @IntegerEqualsValue(INTEGER_EQUALS)
         int testIntegerEquals;

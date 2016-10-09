@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Category(type = AnnotationCategory.INTEGER)
+@Category(type = AnnotationCategory.SHORT)
 public @interface ShortEqualsValue {
     short value();
 }

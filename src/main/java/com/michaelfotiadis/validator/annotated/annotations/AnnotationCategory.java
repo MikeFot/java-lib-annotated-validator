@@ -7,13 +7,15 @@ package com.michaelfotiadis.validator.annotated.annotations;
 public enum AnnotationCategory {
 
     UNUSED,
-    GENERIC,
+    GENERAL,
     BYTE,
     BOOLEAN,
     INTEGER,
     DOUBLE,
     FLOAT,
     SHORT,
-    STRING
+    STRING,
+    COLLECTION,
+    ARRAY
 
 }
