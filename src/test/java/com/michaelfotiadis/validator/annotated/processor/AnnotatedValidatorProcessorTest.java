@@ -1,13 +1,13 @@
-package com.michaelfotiadis.validator.processor;
+package com.michaelfotiadis.validator.annotated.processor;
 
 import com.michaelfotiadis.validator.annotated.ValidationResultsContainer;
+import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleMaxValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleMinValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerEqualsValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerMaxValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerMinValue;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
-import com.michaelfotiadis.validator.annotated.processor.AnnotatedValidatorProcessor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +34,15 @@ public class AnnotatedValidatorProcessorTest {
     @Before
     public void setUp() throws Exception {
         processor = new AnnotatedValidatorProcessor();
+    }
+
+    @Test
+    public void canSupportAllAnnotationCategories() {
+
+        for (final AnnotationCategory category : AnnotationCategory.values()) {
+            assertTrue("Failed to support category: " + category.toString(), processor.canSupportAnnotationCategory(category));
+        }
+
     }
 
     @Test

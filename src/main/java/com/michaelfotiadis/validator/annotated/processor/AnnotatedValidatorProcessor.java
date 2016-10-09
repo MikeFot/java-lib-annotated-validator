@@ -6,6 +6,7 @@ import com.michaelfotiadis.validator.annotated.model.ValidationResult;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.parser.AnnotationParser;
 import com.michaelfotiadis.validator.annotated.validators.Validator;
+import com.michaelfotiadis.validator.annotated.validators.collection.CollectionValidator;
 import com.michaelfotiadis.validator.annotated.validators.conditional.BooleanValidator;
 import com.michaelfotiadis.validator.annotated.validators.general.ObjectValidator;
 import com.michaelfotiadis.validator.annotated.validators.numeric.ByteValidator;
@@ -25,10 +26,12 @@ import java.util.Map;
 /**
  *
  */
+@SuppressWarnings("WeakerAccess")
 public final class AnnotatedValidatorProcessor {
 
     private final Map<AnnotationCategory, Validator<?>> mValidatorMap;
 
+    @SuppressWarnings("WeakerAccess")
     public AnnotatedValidatorProcessor() {
 
         mValidatorMap = new HashMap<>();
@@ -40,6 +43,7 @@ public final class AnnotatedValidatorProcessor {
         mValidatorMap.put(AnnotationCategory.DOUBLE, new DoubleValidator());
         mValidatorMap.put(AnnotationCategory.STRING, new StringValidator());
         mValidatorMap.put(AnnotationCategory.BOOLEAN, new BooleanValidator());
+        mValidatorMap.put(AnnotationCategory.COLLECTION, new CollectionValidator());
 
     }
 
@@ -66,11 +70,22 @@ public final class AnnotatedValidatorProcessor {
         return result;
     }
 
-    private static <T> String getHumanName(final T item, final Field field) {
-        return String.format("%s of type %s in object of type %s",
-                field.getName(),
-                field.getType().getName(),
-                item.getClass().getName());
+    /**
+     * Used for <b>testing</b> if all validators have been added to the map.
+     * The {@link AnnotationCategory#UNUSED} annotation will return true by default.
+     *
+     * @param annotationCategory {@link AnnotationCategory} annotation category value
+     * @return true if supported and validator is not null for category
+     */
+    /*package*/ boolean canSupportAnnotationCategory(final AnnotationCategory annotationCategory) {
+
+        //noinspection SimplifiableIfStatement
+        if (annotationCategory.equals(AnnotationCategory.UNUSED)) {
+            return true;
+        } else {
+            return mValidatorMap.containsKey(annotationCategory)
+                    && mValidatorMap.get(annotationCategory) != null;
+        }
     }
 
     private <T> List<ValidationResult> validateField(final T item, final Field field) throws IllegalAccessException {
@@ -101,6 +116,13 @@ public final class AnnotatedValidatorProcessor {
 
         return results;
 
+    }
+
+    private static <T> String getHumanName(final T item, final Field field) {
+        return String.format("%s of type %s in object of type %s",
+                field.getName(),
+                field.getType().getName(),
+                item.getClass().getName());
     }
 
 }
