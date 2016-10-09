@@ -6,7 +6,9 @@ import com.michaelfotiadis.validator.annotated.model.ValidationResult;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.parser.AnnotationParser;
 import com.michaelfotiadis.validator.annotated.validators.Validator;
+import com.michaelfotiadis.validator.annotated.validators.conditional.BooleanValidator;
 import com.michaelfotiadis.validator.annotated.validators.general.ObjectValidator;
+import com.michaelfotiadis.validator.annotated.validators.numeric.ByteValidator;
 import com.michaelfotiadis.validator.annotated.validators.numeric.DoubleValidator;
 import com.michaelfotiadis.validator.annotated.validators.numeric.FloatValidator;
 import com.michaelfotiadis.validator.annotated.validators.numeric.IntegerValidator;
@@ -28,13 +30,16 @@ public final class AnnotatedValidatorProcessor {
     private final Map<AnnotationCategory, Validator<?>> mValidatorMap;
 
     public AnnotatedValidatorProcessor() {
+
         mValidatorMap = new HashMap<>();
         mValidatorMap.put(AnnotationCategory.GENERIC, new ObjectValidator());
+        mValidatorMap.put(AnnotationCategory.BYTE, new ByteValidator());
         mValidatorMap.put(AnnotationCategory.INTEGER, new IntegerValidator());
         mValidatorMap.put(AnnotationCategory.SHORT, new ShortValidator());
         mValidatorMap.put(AnnotationCategory.FLOAT, new FloatValidator());
         mValidatorMap.put(AnnotationCategory.DOUBLE, new DoubleValidator());
         mValidatorMap.put(AnnotationCategory.STRING, new StringValidator());
+        mValidatorMap.put(AnnotationCategory.BOOLEAN, new BooleanValidator());
 
     }
 

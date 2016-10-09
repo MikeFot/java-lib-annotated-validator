@@ -8,6 +8,8 @@ public enum AnnotationCategory {
 
     UNUSED,
     GENERIC,
+    BYTE,
+    BOOLEAN,
     INTEGER,
     DOUBLE,
     FLOAT,

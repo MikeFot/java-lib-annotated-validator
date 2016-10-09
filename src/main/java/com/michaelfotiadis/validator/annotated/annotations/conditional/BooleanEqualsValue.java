@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.annotated.annotations.number;
+package com.michaelfotiadis.validator.annotated.annotations.conditional;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.Category;
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Category(type = AnnotationCategory.FLOAT)
-public @interface FloatMaxValue {
-    float value();
+@Category(type = AnnotationCategory.BOOLEAN)
+public @interface BooleanEqualsValue {
+    boolean value();
 }

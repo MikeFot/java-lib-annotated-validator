@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.annotated.annotations.number;
+package com.michaelfotiadis.validator.annotated.annotations.numeric.bytenum;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.Category;
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Category(type = AnnotationCategory.DOUBLE)
-public @interface DoubleMaxValue {
-    double value();
+@Category(type = AnnotationCategory.BYTE)
+public @interface ByteEqualsValue {
+    byte value();
 }
