@@ -40,6 +40,10 @@ public class CollectionValidator implements Validator<Collection<?>> {
 
         if (isNotEmpty.isValid()) {
 
+            if (value == null) {
+                return ValidationResult.nullValue();
+            }
+
             // get the class of the first item
             Class genericClass = null;
             final Iterator it = collection.iterator();

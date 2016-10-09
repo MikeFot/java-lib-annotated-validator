@@ -1,8 +1,12 @@
 package com.michaelfotiadis.validator.annotated.processor;
 
 import com.michaelfotiadis.validator.annotated.ValidationResultsContainer;
+import com.michaelfotiadis.validator.annotated.annotations.general.IsNull;
+import com.michaelfotiadis.validator.annotated.annotations.general.NotNull;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleMaxValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.floatnum.FloatEqualsValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.floatnum.FloatMaxValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerEqualsValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerMaxValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerMinValue;
@@ -27,6 +31,7 @@ public class AnnotatedValidatorProcessorNumberTests {
     private static final int INTEGER_EQUALS = 5;
     private static final double DOUBLE_MAX = 527.4343d;
     private static final double DOUBLE_MIN = -300300002.12312d;
+    private static final float FLOAT_EQUALS = -15.17f;
 
     private AnnotatedValidatorProcessor processor;
 
@@ -131,23 +136,33 @@ public class AnnotatedValidatorProcessorNumberTests {
     @SuppressWarnings({"InnerClassMayBeStatic", "ClassWithOnlyPrivateConstructors"})
     private class SampleNumber {
 
-        private static final double EPSILON = 0.000000000001d;
+        private static final double EPSILON = 0.0000000001d;
 
         @IntegerMaxValue(INTEGER_MAX)
         @IntegerMinValue(INTEGER_MIN)
         Integer testIntegerMinMax;
         @IntegerEqualsValue(INTEGER_EQUALS)
         int testIntegerEquals;
+        @NotNull
         @DoubleMaxValue(max = DOUBLE_MAX, epsilon = EPSILON)
         Double testDoubleMax;
         @DoubleMinValue(min = DOUBLE_MIN, epsilon = EPSILON)
         double testDoubleMin;
+        @FloatEqualsValue(value = FLOAT_EQUALS, epsilon = EPSILON)
+        float testFloatEquals;
+        @FloatMaxValue(max = FLOAT_EQUALS + 1, epsilon = EPSILON)
+        Float testFloatMax;
+        @SuppressWarnings("unused")
+        @IsNull
+        Integer testIsNullInteger;
 
         private SampleNumber() {
             testIntegerMinMax = INTEGER_MAX - INTEGER_MIN + 1;
             testIntegerEquals = INTEGER_EQUALS;
             testDoubleMax = DOUBLE_MAX / 2d;
             testDoubleMin = DOUBLE_MIN + 1;
+            testFloatEquals = FLOAT_EQUALS;
+            testFloatMax = FLOAT_EQUALS;
         }
 
     }
