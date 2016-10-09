@@ -6,6 +6,7 @@ import com.michaelfotiadis.validator.annotated.model.ValidationResult;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.parser.AnnotationParser;
 import com.michaelfotiadis.validator.annotated.validators.Validator;
+import com.michaelfotiadis.validator.annotated.validators.array.ArrayValidator;
 import com.michaelfotiadis.validator.annotated.validators.collection.CollectionValidator;
 import com.michaelfotiadis.validator.annotated.validators.conditional.BooleanValidator;
 import com.michaelfotiadis.validator.annotated.validators.general.ObjectValidator;
@@ -44,6 +45,7 @@ public final class AnnotatedValidatorProcessor {
         mValidatorMap.put(AnnotationCategory.STRING, new StringValidator());
         mValidatorMap.put(AnnotationCategory.BOOLEAN, new BooleanValidator());
         mValidatorMap.put(AnnotationCategory.COLLECTION, new CollectionValidator());
+        mValidatorMap.put(AnnotationCategory.ARRAY, new ArrayValidator());
 
     }
 
@@ -74,7 +76,7 @@ public final class AnnotatedValidatorProcessor {
      * Used for <b>testing</b> if all validators have been added to the map.
      * The {@link AnnotationCategory#UNUSED} annotation will return true by default.
      *
-     * @param annotationCategory {@link AnnotationCategory} annotation category value
+     * @param annotationCategory {@link AnnotationCategory} annotation category max
      * @return true if supported and validator is not null for category
      */
     /*package*/ boolean canSupportAnnotationCategory(final AnnotationCategory annotationCategory) {

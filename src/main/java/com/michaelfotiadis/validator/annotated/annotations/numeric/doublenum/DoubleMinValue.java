@@ -14,5 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Category(type = AnnotationCategory.DOUBLE)
 public @interface DoubleMinValue {
-    double value();
+    double min();
+
+    double epsilon();
 }

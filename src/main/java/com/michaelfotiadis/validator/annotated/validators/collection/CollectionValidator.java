@@ -71,11 +71,15 @@ public class CollectionValidator implements Validator<Collection<?>> {
         if (collection == null) {
             return ValidationResult.nullValue();
         } else {
-            for (final Object item : collection) {
-                if (item == null) {
+
+            final Iterator<?> iterator = collection.iterator();
+            //noinspection WhileLoopReplaceableByForEach
+            while (iterator.hasNext()) {
+                if (iterator.next() == null) {
                     return new ValidationResult(ValidationStatus.COLLECTION_CONTAINS_NULL);
                 }
             }
+
             return ValidationResult.success();
         }
 
@@ -92,4 +96,5 @@ public class CollectionValidator implements Validator<Collection<?>> {
         }
 
     }
+
 }

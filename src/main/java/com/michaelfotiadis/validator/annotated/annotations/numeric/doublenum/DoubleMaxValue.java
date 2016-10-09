@@ -14,5 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Category(type = AnnotationCategory.DOUBLE)
 public @interface DoubleMaxValue {
-    double value();
+    double max();
+
+    double epsilon();
 }

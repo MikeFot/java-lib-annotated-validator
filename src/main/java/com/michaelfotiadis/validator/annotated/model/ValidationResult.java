@@ -40,7 +40,7 @@ public class ValidationResult {
     /**
      * Static factory
      *
-     * @return null value {@link ValidationResult}
+     * @return null max {@link ValidationResult}
      */
     public static ValidationResult nullValue() {
         return new ValidationResult(ValidationStatus.NULL_VALUE);

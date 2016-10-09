@@ -15,4 +15,6 @@ import java.lang.annotation.Target;
 @Category(type = AnnotationCategory.FLOAT)
 public @interface FloatEqualsValue {
     float value();
+
+    double epsilon();
 }

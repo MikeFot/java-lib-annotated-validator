@@ -14,5 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Category(type = AnnotationCategory.FLOAT)
 public @interface FloatMaxValue {
-    float value();
+    float max();
+
+    double epsilon();
 }

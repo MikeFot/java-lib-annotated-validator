@@ -20,41 +20,51 @@ public class DoubleValidator implements Validator<Double> {
         final Class<? extends Annotation> type = annotation.annotationType();
 
         if (type.equals(DoubleMaxValue.class)) {
-            return handleMaxValue(value, ((DoubleMaxValue) annotation).value());
+            final DoubleMaxValue clazz = ((DoubleMaxValue) annotation);
+            return handleMaxValue(value, clazz.max(), clazz.epsilon());
         } else if (type.equals(DoubleMinValue.class)) {
-            return handleMinValue(value, ((DoubleMinValue) annotation).value());
+            final DoubleMinValue clazz = ((DoubleMinValue) annotation);
+            return handleMinValue(value, clazz.min(), clazz.epsilon());
         } else if (type.equals(DoubleEqualsValue.class)) {
-            return handleEqualsValue(value, ((DoubleEqualsValue) annotation).value());
+            final DoubleEqualsValue clazz = ((DoubleEqualsValue) annotation);
+            return handleEqualsValue(value, clazz.value(), clazz.epsilon());
         } else {
             return ValidationResult.failure();
         }
 
     }
 
-    private static ValidationResult handleEqualsValue(final Double number, final double equalsValue) {
+    private static ValidationResult handleEqualsValue(final Double number,
+                                                      final double equalsValue,
+                                                      final double epsilon) {
+
         if (number == null) {
             return ValidationResult.nullValue();
-        } else if (number == equalsValue) {
+        } else if (Math.abs(number - equalsValue) <= epsilon) {
             return ValidationResult.success();
         } else {
             return new ValidationResult(ValidationStatus.DOUBLE_OUT_OF_RANGE);
         }
     }
 
-    private static ValidationResult handleMaxValue(final Double number, final double maxValue) {
+    private static ValidationResult handleMaxValue(final Double number,
+                                                   final double maxValue,
+                                                   final double epsilon) {
         if (number == null) {
             return ValidationResult.nullValue();
-        } else if (number <= maxValue) {
+        } else if (Math.abs(number - maxValue) <= epsilon || number <= maxValue) {
             return ValidationResult.success();
         } else {
             return new ValidationResult(ValidationStatus.DOUBLE_OUT_OF_RANGE);
         }
     }
 
-    private static ValidationResult handleMinValue(final Double number, final double minValue) {
+    private static ValidationResult handleMinValue(final Double number,
+                                                   final double minValue,
+                                                   final double epsilon) {
         if (number == null) {
             return ValidationResult.nullValue();
-        } else if (number >= minValue) {
+        } else if (Math.abs(number - minValue) <= epsilon || number >= minValue) {
             return ValidationResult.success();
         } else {
             return new ValidationResult(ValidationStatus.DOUBLE_OUT_OF_RANGE);

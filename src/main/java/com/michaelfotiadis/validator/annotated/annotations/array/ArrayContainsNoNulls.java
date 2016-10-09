@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum;
+package com.michaelfotiadis.validator.annotated.annotations.array;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.Category;
@@ -12,9 +12,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Category(type = AnnotationCategory.DOUBLE)
-public @interface DoubleEqualsValue {
-    double value();
+@Category(type = AnnotationCategory.ARRAY)
+public @interface ArrayContainsNoNulls {
 
-    double epsilon();
 }
