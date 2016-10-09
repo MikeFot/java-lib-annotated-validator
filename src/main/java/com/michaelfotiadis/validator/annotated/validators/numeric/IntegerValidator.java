@@ -1,8 +1,8 @@
 package com.michaelfotiadis.validator.annotated.validators.numeric;
 
-import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.ValIntegerEqualsValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.ValIntegerMaxValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.ValIntegerMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerEqualsValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerMaxValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.lIntegerMinValue;
 import com.michaelfotiadis.validator.annotated.model.ValidationResult;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.validators.Validator;
@@ -19,12 +19,12 @@ public class IntegerValidator implements Validator<Integer> {
 
         final Class<? extends Annotation> type = annotation.annotationType();
 
-        if (type.equals(ValIntegerMaxValue.class)) {
-            return handleMaxValue(value, ((ValIntegerMaxValue) annotation).value());
-        } else if (type.equals(ValIntegerMinValue.class)) {
-            return handleMinValue(value, ((ValIntegerMinValue) annotation).value());
-        } else if (type.equals(ValIntegerEqualsValue.class)) {
-            return handleEqualsValue(value, ((ValIntegerEqualsValue) annotation).value());
+        if (type.equals(IntegerMaxValue.class)) {
+            return handleMaxValue(value, ((IntegerMaxValue) annotation).value());
+        } else if (type.equals(lIntegerMinValue.class)) {
+            return handleMinValue(value, ((lIntegerMinValue) annotation).value());
+        } else if (type.equals(IntegerEqualsValue.class)) {
+            return handleEqualsValue(value, ((IntegerEqualsValue) annotation).value());
         } else {
             return ValidationResult.failure();
         }

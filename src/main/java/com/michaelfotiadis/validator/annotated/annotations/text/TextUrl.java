@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.annotated.annotations.numeric.floatnum;
+package com.michaelfotiadis.validator.annotated.annotations.text;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.Category;
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Category(type = AnnotationCategory.FLOAT)
-public @interface ValFloatMinValue {
-    float value();
+@Category(type = AnnotationCategory.STRING)
+public @interface TextUrl {
+
 }

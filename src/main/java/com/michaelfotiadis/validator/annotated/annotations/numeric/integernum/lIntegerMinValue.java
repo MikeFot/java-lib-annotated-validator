@@ -13,6 +13,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Category(type = AnnotationCategory.INTEGER)
-public @interface ValIntegerEqualsValue {
+public @interface lIntegerMinValue {
     int value();
 }

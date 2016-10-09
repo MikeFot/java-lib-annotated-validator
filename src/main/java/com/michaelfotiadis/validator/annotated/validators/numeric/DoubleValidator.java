@@ -1,8 +1,8 @@
 package com.michaelfotiadis.validator.annotated.validators.numeric;
 
-import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.ValDoubleEqualsValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.ValDoubleMaxValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.ValDoubleMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleEqualsValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleMaxValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleMinValue;
 import com.michaelfotiadis.validator.annotated.model.ValidationResult;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.validators.Validator;
@@ -19,12 +19,12 @@ public class DoubleValidator implements Validator<Double> {
 
         final Class<? extends Annotation> type = annotation.annotationType();
 
-        if (type.equals(ValDoubleMaxValue.class)) {
-            return handleMaxValue(value, ((ValDoubleMaxValue) annotation).value());
-        } else if (type.equals(ValDoubleMinValue.class)) {
-            return handleMinValue(value, ((ValDoubleMinValue) annotation).value());
-        } else if (type.equals(ValDoubleEqualsValue.class)) {
-            return handleEqualsValue(value, ((ValDoubleEqualsValue) annotation).value());
+        if (type.equals(DoubleMaxValue.class)) {
+            return handleMaxValue(value, ((DoubleMaxValue) annotation).value());
+        } else if (type.equals(DoubleMinValue.class)) {
+            return handleMinValue(value, ((DoubleMinValue) annotation).value());
+        } else if (type.equals(DoubleEqualsValue.class)) {
+            return handleEqualsValue(value, ((DoubleEqualsValue) annotation).value());
         } else {
             return ValidationResult.failure();
         }

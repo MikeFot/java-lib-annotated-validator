@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum;
+package com.michaelfotiadis.validator.annotated.annotations.numeric.integernum;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.Category;
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Category(type = AnnotationCategory.DOUBLE)
-public @interface ValDoubleMinValue {
-    double value();
+@Category(type = AnnotationCategory.INTEGER)
+public @interface IntegerEqualsValue {
+    int value();
 }

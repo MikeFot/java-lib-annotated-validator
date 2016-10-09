@@ -1,11 +1,11 @@
 package com.michaelfotiadis.validator.processor;
 
 import com.michaelfotiadis.validator.annotated.ValidationResultsContainer;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.ValDoubleMaxValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.ValDoubleMinValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.ValIntegerEqualsValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.ValIntegerMaxValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.ValIntegerMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleMaxValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerEqualsValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerMaxValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.lIntegerMinValue;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.processor.AnnotatedValidatorProcessor;
 
@@ -130,14 +130,14 @@ public class AnnotatedValidatorProcessorTest {
 
     @SuppressWarnings({"InnerClassMayBeStatic", "ClassWithOnlyPrivateConstructors"})
     public class SampleNumber {
-        @ValIntegerMaxValue(INTEGER_MAX)
-        @ValIntegerMinValue(INTEGER_MIN)
+        @IntegerMaxValue(INTEGER_MAX)
+        @lIntegerMinValue(INTEGER_MIN)
         Integer testIntegerMinMax;
-        @ValIntegerEqualsValue(INTEGER_EQUALS)
+        @IntegerEqualsValue(INTEGER_EQUALS)
         int testIntegerEquals;
-        @ValDoubleMaxValue(DOUBLE_MAX)
+        @DoubleMaxValue(DOUBLE_MAX)
         Double testDoubleMax;
-        @ValDoubleMinValue(DOUBLE_MIN)
+        @DoubleMinValue(DOUBLE_MIN)
         double testDoubleMin;
 
         private SampleNumber() {

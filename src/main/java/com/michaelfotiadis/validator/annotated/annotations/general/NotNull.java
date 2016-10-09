@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.annotated.annotations.numeric.shortnum;
+package com.michaelfotiadis.validator.annotated.annotations.general;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.Category;
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Category(type = AnnotationCategory.INTEGER)
-public @interface ValShortEqualsValue {
-    short value();
+@Category(type = AnnotationCategory.GENERIC)
+public @interface NotNull {
+
 }

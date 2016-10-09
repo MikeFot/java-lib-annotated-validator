@@ -1,16 +1,19 @@
 package com.michaelfotiadis.validator.annotated.validators.text;
 
-import com.michaelfotiadis.validator.annotated.annotations.text.ValEmail;
-import com.michaelfotiadis.validator.annotated.annotations.text.ValTextExactLength;
-import com.michaelfotiadis.validator.annotated.annotations.text.ValTextIsNumeric;
-import com.michaelfotiadis.validator.annotated.annotations.text.ValTextMaxLength;
-import com.michaelfotiadis.validator.annotated.annotations.text.ValTextMinLength;
-import com.michaelfotiadis.validator.annotated.annotations.text.ValTextNotNullOrEmpty;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextEmail;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextExactLength;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextIsNumeric;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextMatchesExpression;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextMaxLength;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextMinLength;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextNotNullOrEmpty;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextUrl;
 import com.michaelfotiadis.validator.annotated.model.ValidationResult;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.validators.Validator;
 
 import java.lang.annotation.Annotation;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -22,17 +25,21 @@ public class StringValidator implements Validator<String> {
 
         final Class<? extends Annotation> type = annotation.annotationType();
 
-        if (type.equals(ValTextNotNullOrEmpty.class)) {
+        if (type.equals(TextNotNullOrEmpty.class)) {
             return handleNotNullOrEmpty(value);
-        } else if (type.equals(ValEmail.class)) {
+        } else if (type.equals(TextEmail.class)) {
             return handleEmail(value);
-        } else if (type.equals(ValTextExactLength.class)) {
-            return handleExactLength(value, ((ValTextExactLength) annotation).value());
-        } else if (type.equals(ValTextMinLength.class)) {
-            return handleMinLength(value, ((ValTextMinLength) annotation).value());
-        } else if (type.equals(ValTextMaxLength.class)) {
-            return handleMaxLength(value, ((ValTextMaxLength) annotation).value());
-        } else if (type.equals(ValTextIsNumeric.class)) {
+        } else if (type.equals(TextUrl.class)) {
+            return handleUrl(value);
+        } else if (type.equals(TextMatchesExpression.class)) {
+            return handleMatchesExpression(value, ((TextMatchesExpression) annotation).expression());
+        } else if (type.equals(TextExactLength.class)) {
+            return handleExactLength(value, ((TextExactLength) annotation).value());
+        } else if (type.equals(TextMinLength.class)) {
+            return handleMinLength(value, ((TextMinLength) annotation).value());
+        } else if (type.equals(TextMaxLength.class)) {
+            return handleMaxLength(value, ((TextMaxLength) annotation).value());
+        } else if (type.equals(TextIsNumeric.class)) {
             return handleIsNumeric(value);
         } else {
             return ValidationResult.failure();
@@ -40,12 +47,41 @@ public class StringValidator implements Validator<String> {
 
     }
 
+    private static ValidationResult handleMatchesExpression(final String value, final String expression) {
+
+        final ValidationResult notEmptyResult = handleNotNullOrEmpty(value);
+        if (notEmptyResult.isValid()) {
+
+            if (Pattern.compile(expression).matcher(value).matches()) {
+                return ValidationResult.success();
+            } else {
+                return new ValidationResult(ValidationStatus.PATTERN_DID_NOT_MATCH);
+            }
+        } else {
+            return notEmptyResult;
+        }
+    }
+
+    private static ValidationResult handleUrl(final String value) {
+
+        final ValidationResult notEmptyResult = handleNotNullOrEmpty(value);
+        if (notEmptyResult.isValid()) {
+            if (TextUrlValidationHelper.isUrl(value)) {
+                return ValidationResult.success();
+            } else {
+                return new ValidationResult(ValidationStatus.PATTERN_DID_NOT_MATCH);
+            }
+        } else {
+            return notEmptyResult;
+        }
+    }
+
     private static ValidationResult handleIsNumeric(final String value) {
         if (value == null) {
             return ValidationResult.nullValue();
         } else if (value.isEmpty()) {
             return new ValidationResult(ValidationStatus.EMPTY_STRING);
-        } else if (TextValidatorUtils.isNumeric(value)) {
+        } else if (TextNumericValidatorHelper.isNumeric(value)) {
             return ValidationResult.success();
         } else {
             return new ValidationResult(ValidationStatus.INVALID_VALUE);
@@ -86,10 +122,10 @@ public class StringValidator implements Validator<String> {
 
         final ValidationResult notEmptyResult = handleNotNullOrEmpty(value);
         if (notEmptyResult.isValid()) {
-            if (TextValidatorUtils.isEmail(value)) {
+            if (TextEmailValidationHelper.isEmail(value)) {
                 return ValidationResult.success();
             } else {
-                return new ValidationResult(ValidationStatus.INVALID_VALUE);
+                return new ValidationResult(ValidationStatus.PATTERN_DID_NOT_MATCH);
             }
         } else {
             return notEmptyResult;
@@ -108,4 +144,5 @@ public class StringValidator implements Validator<String> {
         }
 
     }
+
 }

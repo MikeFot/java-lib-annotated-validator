@@ -1,8 +1,8 @@
 package com.michaelfotiadis.validator.annotated.validators.numeric;
 
-import com.michaelfotiadis.validator.annotated.annotations.numeric.floatnum.ValFloatEqualsValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.floatnum.ValFloatMaxValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.floatnum.ValFloatMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.floatnum.FloatEqualsValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.floatnum.FloatMaxValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.floatnum.FloatMinValue;
 import com.michaelfotiadis.validator.annotated.model.ValidationResult;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.validators.Validator;
@@ -19,12 +19,12 @@ public class FloatValidator implements Validator<Float> {
 
         final Class<? extends Annotation> type = annotation.annotationType();
 
-        if (type.equals(ValFloatMaxValue.class)) {
-            return handleMaxValue(value, ((ValFloatMaxValue) annotation).value());
-        } else if (type.equals(ValFloatMinValue.class)) {
-            return handleMinValue(value, ((ValFloatMinValue) annotation).value());
-        } else if (type.equals(ValFloatEqualsValue.class)) {
-            return handleEqualsValue(value, ((ValFloatEqualsValue) annotation).value());
+        if (type.equals(FloatMaxValue.class)) {
+            return handleMaxValue(value, ((FloatMaxValue) annotation).value());
+        } else if (type.equals(FloatMinValue.class)) {
+            return handleMinValue(value, ((FloatMinValue) annotation).value());
+        } else if (type.equals(FloatEqualsValue.class)) {
+            return handleEqualsValue(value, ((FloatEqualsValue) annotation).value());
         } else {
             return ValidationResult.failure();
         }

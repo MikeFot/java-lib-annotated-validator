@@ -13,6 +13,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Category(type = AnnotationCategory.STRING)
-public @interface ValEmail {
+public @interface TextEmail {
 
 }

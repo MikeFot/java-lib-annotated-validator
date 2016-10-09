@@ -1,8 +1,8 @@
 package com.michaelfotiadis.validator.annotated.validators.numeric;
 
-import com.michaelfotiadis.validator.annotated.annotations.numeric.shortnum.ValShortEqualsValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.shortnum.ValShortMaxValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.shortnum.ValShortMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.shortnum.ShortEqualsValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.shortnum.ShortMaxValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.shortnum.ShortMinValue;
 import com.michaelfotiadis.validator.annotated.model.ValidationResult;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.validators.Validator;
@@ -19,12 +19,12 @@ public class ShortValidator implements Validator<Short> {
 
         final Class<? extends Annotation> type = annotation.annotationType();
 
-        if (type.equals(ValShortMaxValue.class)) {
-            return handleMaxValue(value, ((ValShortMaxValue) annotation).value());
-        } else if (type.equals(ValShortMinValue.class)) {
-            return handleMinValue(value, ((ValShortMinValue) annotation).value());
-        } else if (type.equals(ValShortEqualsValue.class)) {
-            return handleEqualsValue(value, ((ValShortEqualsValue) annotation).value());
+        if (type.equals(ShortMaxValue.class)) {
+            return handleMaxValue(value, ((ShortMaxValue) annotation).value());
+        } else if (type.equals(ShortMinValue.class)) {
+            return handleMinValue(value, ((ShortMinValue) annotation).value());
+        } else if (type.equals(ShortEqualsValue.class)) {
+            return handleEqualsValue(value, ((ShortEqualsValue) annotation).value());
         } else {
             return ValidationResult.failure();
         }

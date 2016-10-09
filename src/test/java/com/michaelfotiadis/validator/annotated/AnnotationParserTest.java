@@ -1,7 +1,7 @@
 package com.michaelfotiadis.validator.annotated;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.ValIntegerMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.lIntegerMinValue;
 import com.michaelfotiadis.validator.annotated.parser.AnnotationParser;
 
 import org.junit.Test;
@@ -21,17 +21,17 @@ public class AnnotationParserTest {
     @Test
     public void containsAnnotation() throws Exception {
 
-        assertFalse(AnnotationParser.containsAnnotation("Sss".getClass(), ValIntegerMinValue.class));
+        assertFalse(AnnotationParser.containsAnnotation("Sss".getClass(), lIntegerMinValue.class));
 
         final TestInteger testInteger = new TestInteger();
-        assertTrue(AnnotationParser.containsAnnotation(testInteger.getClass(), ValIntegerMinValue.class));
+        assertTrue(AnnotationParser.containsAnnotation(testInteger.getClass(), lIntegerMinValue.class));
 
     }
 
     @Test
     public void containsAnnotationExtended() throws Exception {
         final ExtendedTestInteger extendedTestInteger = new ExtendedTestInteger();
-        assertTrue(AnnotationParser.containsAnnotation(extendedTestInteger.getClass(), ValIntegerMinValue.class));
+        assertTrue(AnnotationParser.containsAnnotation(extendedTestInteger.getClass(), lIntegerMinValue.class));
 
     }
 
@@ -40,7 +40,7 @@ public class AnnotationParserTest {
 
         TestInteger testInteger = new TestInteger();
 
-        Annotation annotation = AnnotationParser.getAnnotation(testInteger.getClass(), ValIntegerMinValue.class);
+        Annotation annotation = AnnotationParser.getAnnotation(testInteger.getClass(), lIntegerMinValue.class);
 
         assertNotNull(annotation);
 
@@ -51,7 +51,7 @@ public class AnnotationParserTest {
     }
     @SuppressWarnings("InnerClassMayBeStatic")
     private abstract class BaseTestInteger {
-        @ValIntegerMinValue(1)
+        @lIntegerMinValue(1)
         int value;
     }
 
@@ -62,7 +62,7 @@ public class AnnotationParserTest {
 
     @SuppressWarnings("InnerClassMayBeStatic")
     private class TestInteger {
-        @ValIntegerMinValue(1)
+        @lIntegerMinValue(1)
         int value;
     }
 
