@@ -2,23 +2,17 @@ package com.michaelfotiadis.validator.annotated.parser;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.Category;
+import com.michaelfotiadis.validator.annotated.processor.SearchPolicy;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  *
  */
 public final class AnnotationParser {
 
-    private AnnotationParser() {
-        // do not instantiate
-    }
-
-    public static <T> boolean parseAnnotations(final T item) {
+    public <T> boolean parseAnnotations(final T item) {
 
         boolean foundAnnotation = false;
 
@@ -38,49 +32,20 @@ public final class AnnotationParser {
 
     }
 
-    /**
-     * Gets all declared {@link Field}s in a class
-     *
-     * @param type {@link Class} to be processed
-     * @return {@link List} of {@link Field} found
-     */
-    public static List<Field> getDeclaredFields(final Class<?> type) {
-        final List<Field> fields = new ArrayList<>();
-        getDeclaredFieldsRecursively(fields, type);
-        return fields;
-    }
-
-    /**
-     * Recursive method for getting all fields, including superclass ones
-     *
-     * @param fields {@link List} of {@link Field} that will be modified recursively if a superclass exists
-     * @param type   {@link Class} of the object to be processed
-     * @return {@link List} of {@link Field} found
-     */
-    public static List<Field> getDeclaredFieldsRecursively(List<Field> fields, final Class<?> type) {
-
-        fields.addAll(Arrays.asList(type.getDeclaredFields()));
-
-        if (type.getSuperclass() != null) {
-            fields = getDeclaredFieldsRecursively(fields, type.getSuperclass());
-        }
-
-        return fields;
-    }
 
     /**
      * Utility method to check if a particular annotation exists within a class
      *
-     * @param type           {@link Class} to be evaluated
+     * @param obj           {@link Object} to be evaluated
      * @param annotationType {@link Class} of the annotation
      * @return true if annotation exists in class or superclass
      */
-    public static boolean containsAnnotation(final Class<?> type, final Class annotationType) {
-        return getAnnotation(type, annotationType) != null;
+    public boolean containsAnnotation(final Object obj, final Class annotationType) {
+        return getAnnotation(obj, annotationType) != null;
     }
 
-    public static Annotation getAnnotation(final Class<?> type, final Class annotationType) {
-        for (final Field f : getDeclaredFields(type)) {
+    public Annotation getAnnotation(final Object obj, final Class annotationType) {
+        for (final Field f : new FieldParser().getDeclaredFields(obj, SearchPolicy.SHALLOW)) {
             if (f.getAnnotation(annotationType) != null) {
                 return f.getAnnotation(annotationType);
             }
@@ -88,7 +53,7 @@ public final class AnnotationParser {
         return null;
     }
 
-    public static AnnotationCategory getCategoryOfAnnotation(final Annotation annotation) {
+    public AnnotationCategory getCategoryOfAnnotation(final Annotation annotation) {
 
         final Category category = annotation.annotationType().getAnnotation(Category.class);
 

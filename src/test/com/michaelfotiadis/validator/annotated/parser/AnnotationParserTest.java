@@ -1,8 +1,7 @@
-package com.michaelfotiadis.validator.annotated;
+package com.michaelfotiadis.validator.annotated.parser;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerMinValue;
-import com.michaelfotiadis.validator.annotated.parser.AnnotationParser;
 
 import org.junit.Test;
 
@@ -20,18 +19,19 @@ public class AnnotationParserTest {
 
     @Test
     public void containsAnnotation() throws Exception {
-
-        assertFalse(AnnotationParser.containsAnnotation("Sss".getClass(), IntegerMinValue.class));
+        AnnotationParser parser = new AnnotationParser();
+        assertFalse(parser.containsAnnotation("Sss".getClass(), IntegerMinValue.class));
 
         final TestInteger testInteger = new TestInteger();
-        assertTrue(AnnotationParser.containsAnnotation(testInteger.getClass(), IntegerMinValue.class));
+        assertTrue(parser.containsAnnotation(testInteger.getClass(), IntegerMinValue.class));
 
     }
 
     @Test
     public void containsAnnotationExtended() throws Exception {
         final ExtendedTestInteger extendedTestInteger = new ExtendedTestInteger();
-        assertTrue(AnnotationParser.containsAnnotation(extendedTestInteger.getClass(), IntegerMinValue.class));
+        AnnotationParser parser = new AnnotationParser();
+        assertTrue(parser.containsAnnotation(extendedTestInteger.getClass(), IntegerMinValue.class));
 
     }
 
@@ -40,15 +40,17 @@ public class AnnotationParserTest {
 
         TestInteger testInteger = new TestInteger();
 
-        Annotation annotation = AnnotationParser.getAnnotation(testInteger.getClass(), IntegerMinValue.class);
+        AnnotationParser parser = new AnnotationParser();
+        Annotation annotation = parser.getAnnotation(testInteger, IntegerMinValue.class);
 
         assertNotNull(annotation);
 
-        AnnotationCategory category = AnnotationParser.getCategoryOfAnnotation(annotation);
+        AnnotationCategory category = parser.getCategoryOfAnnotation(annotation);
 
         assertEquals(AnnotationCategory.INTEGER, category);
 
     }
+
     @SuppressWarnings("InnerClassMayBeStatic")
     private abstract class BaseTestInteger {
         @IntegerMinValue(1)

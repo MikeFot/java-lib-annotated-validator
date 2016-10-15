@@ -5,6 +5,7 @@ import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.model.ValidationResult;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.parser.AnnotationParser;
+import com.michaelfotiadis.validator.annotated.parser.FieldParser;
 import com.michaelfotiadis.validator.annotated.validators.Validator;
 import com.michaelfotiadis.validator.annotated.validators.array.ArrayValidator;
 import com.michaelfotiadis.validator.annotated.validators.collection.CollectionValidator;
@@ -30,28 +31,47 @@ import java.util.Map;
 @SuppressWarnings("WeakerAccess")
 public final class AnnotatedValidatorProcessor {
 
-    private final Map<AnnotationCategory, Validator<?>> mValidatorMap;
+    private static final FailPolicy DEFAULT_FAIL_POLICY = FailPolicy.CONTINUE;
+    private static final SearchPolicy DEFAULT_SEARCH_POLICY = SearchPolicy.SHALLOW;
 
-    @SuppressWarnings("WeakerAccess")
+    private final Map<AnnotationCategory, Validator<?>> validatorMap;
+    private final FieldParser fieldParser;
+    private final AnnotationParser annotationParser;
+    private FailPolicy failPolicy;
+    private SearchPolicy searchPolicy;
+
     public AnnotatedValidatorProcessor() {
+        this(DEFAULT_SEARCH_POLICY, DEFAULT_FAIL_POLICY);
+    }
 
-        mValidatorMap = new HashMap<>();
-        mValidatorMap.put(AnnotationCategory.GENERAL, new ObjectValidator());
-        mValidatorMap.put(AnnotationCategory.BYTE, new ByteValidator());
-        mValidatorMap.put(AnnotationCategory.INTEGER, new IntegerValidator());
-        mValidatorMap.put(AnnotationCategory.SHORT, new ShortValidator());
-        mValidatorMap.put(AnnotationCategory.FLOAT, new FloatValidator());
-        mValidatorMap.put(AnnotationCategory.DOUBLE, new DoubleValidator());
-        mValidatorMap.put(AnnotationCategory.STRING, new StringValidator());
-        mValidatorMap.put(AnnotationCategory.BOOLEAN, new BooleanValidator());
-        mValidatorMap.put(AnnotationCategory.COLLECTION, new CollectionValidator());
-        mValidatorMap.put(AnnotationCategory.ARRAY, new ArrayValidator());
+    public AnnotatedValidatorProcessor(final SearchPolicy searchPolicy, final FailPolicy failPolicy) {
+        this.searchPolicy = searchPolicy;
+        this.failPolicy = failPolicy;
+        this.validatorMap = new HashMap<>();
+        this.fieldParser = new FieldParser();
+        this.annotationParser = new AnnotationParser();
+        initValidators();
 
     }
 
-    public <T> ValidationResultsContainer validate(final T item) {
+    private void initValidators() {
+        validatorMap.put(AnnotationCategory.GENERAL, new ObjectValidator());
+        validatorMap.put(AnnotationCategory.BYTE, new ByteValidator());
+        validatorMap.put(AnnotationCategory.INTEGER, new IntegerValidator());
+        validatorMap.put(AnnotationCategory.SHORT, new ShortValidator());
+        validatorMap.put(AnnotationCategory.FLOAT, new FloatValidator());
+        validatorMap.put(AnnotationCategory.DOUBLE, new DoubleValidator());
+        validatorMap.put(AnnotationCategory.STRING, new StringValidator());
+        validatorMap.put(AnnotationCategory.BOOLEAN, new BooleanValidator());
+        validatorMap.put(AnnotationCategory.COLLECTION, new CollectionValidator());
+        validatorMap.put(AnnotationCategory.ARRAY, new ArrayValidator());
+    }
 
-        final List<Field> fields = AnnotationParser.getDeclaredFields(item.getClass());
+    public <T> ValidationResultsContainer validate(final T item,
+                                                   final SearchPolicy searchPolicy,
+                                                   final FailPolicy failPolicy) {
+
+        final List<Field> fields = fieldParser.getDeclaredFields(item, searchPolicy);
 
         final ValidationResultsContainer result = new ValidationResultsContainer();
 
@@ -61,6 +81,12 @@ public final class AnnotatedValidatorProcessor {
                 final List<ValidationResult> results = validateField(item, field);
                 if (!AnnotationProcessorUtils.areAllResultsValid(results)) {
                     result.put(getHumanName(item, field), AnnotationProcessorUtils.getFailures(results));
+
+                    // end here if the policy is set to fail on first error
+                    if (failPolicy.equals(FailPolicy.FAIL_ON_FIRST_ERROR)) {
+                        return result;
+                    }
+
                 }
             } catch (final IllegalAccessException e) {
                 result.put(getHumanName(item, field), ValidationStatus.EXCEPTION);
@@ -70,6 +96,10 @@ public final class AnnotatedValidatorProcessor {
         }
 
         return result;
+    }
+
+    public <T> ValidationResultsContainer validate(final T item) {
+        return this.validate(item, searchPolicy, failPolicy);
     }
 
     /**
@@ -85,8 +115,8 @@ public final class AnnotatedValidatorProcessor {
         if (annotationCategory.equals(AnnotationCategory.UNUSED)) {
             return true;
         } else {
-            return mValidatorMap.containsKey(annotationCategory)
-                    && mValidatorMap.get(annotationCategory) != null;
+            return validatorMap.containsKey(annotationCategory)
+                    && validatorMap.get(annotationCategory) != null;
         }
     }
 
@@ -97,14 +127,14 @@ public final class AnnotatedValidatorProcessor {
 
         if (annotations != null && annotations.length > 0) {
             for (final Annotation annotation : annotations) {
-                final AnnotationCategory category = AnnotationParser.getCategoryOfAnnotation(annotation);
+                final AnnotationCategory category = annotationParser.getCategoryOfAnnotation(annotation);
                 final ValidationResult result;
 
                 final Object o = field.get(item);
 
-                if (mValidatorMap.containsKey(category)) {
+                if (validatorMap.containsKey(category)) {
 
-                    final Validator validator = mValidatorMap.get(category);
+                    final Validator validator = validatorMap.get(category);
                     //noinspection unchecked
                     result = validator.validate(o, annotation);
                 } else {
