@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -56,27 +57,28 @@ public class FieldParser {
      * @return {@link List} of {@link Field} found
      */
     public <T> List<Field> getDeclaredFields(final T obj, final SearchPolicy searchPolicy) {
+
         final List<Field> fields = new ArrayList<>();
         getDeclaredFieldsRecursively(fields, obj.getClass());
 
         if (searchPolicy.equals(SearchPolicy.DEEP)) {
+
             final List<Field> deepFields = new ArrayList<>();
             for (final Field field : fields) {
+                if (!visitedFields.contains(field)) {
+                    try {
+                        field.setAccessible(true);
+                        final Object o1 = field.get(obj);
+                        deepFields.addAll(checkObjectIterable(o1));
 
-                try {
-                    field.setAccessible(true);
-                    final Object o1 = field.get(obj);
-                    deepFields.addAll(checkObjectIterable(o1));
-
-                } catch (final IllegalAccessException e) {
-                    e.printStackTrace();
-                } finally {
-                    field.setAccessible(false);
+                    } catch (final IllegalAccessException e) {
+                        e.printStackTrace();
+                    } finally {
+                        field.setAccessible(false);
+                    }
                 }
-
             }
             fields.addAll(deepFields);
-
 
         }
 
@@ -93,6 +95,7 @@ public class FieldParser {
                 for (final Object value : map.values()) {
                     if (!isWrapperType(value.getClass())) {
                         fields.addAll(getDeclaredFields(value, SearchPolicy.DEEP));
+
                     }
                 }
             } else if (obj instanceof Collection) {
@@ -107,8 +110,11 @@ public class FieldParser {
                         fields.addAll(getDeclaredFields(value, SearchPolicy.DEEP));
                     }
                 }
+            } else {
+                fields.addAll(Arrays.asList(obj.getClass().getFields()));
             }
         }
+        visitedFields.addAll(fields);
         return fields;
     }
 
@@ -146,5 +152,50 @@ public class FieldParser {
 
         return fields;
     }
+
+    public static List<Field> getAnnotatedFields(final Object root,
+                                                 final SearchPolicy searchPolicy) throws ReflectiveOperationException {
+        return getAnnotatedFields(root, searchPolicy, new HashSet<>());
+    }
+
+    private static List<Field> getAnnotatedFields(final Object root,
+                                                  final SearchPolicy searchPolicy,
+                                                  final Set<Object> inspected)
+            throws ReflectiveOperationException {
+        final List<Field> annotatedValues = new ArrayList<>();
+        if (inspected.contains(root)) { // Prevents stack overflow.
+            return Collections.emptyList();
+        }
+        inspected.add(root);
+        for (final Field field : gatherFields(root.getClass())) {
+            field.setAccessible(true);
+            final Object currentValue = field.get(root);
+            field.setAccessible(false);
+            if (field.getAnnotations().length != 0) {
+                // Found required value, search finished:
+                annotatedValues.add(field);
+                if (currentValue != null) {
+                    inspected.add(currentValue);
+                }
+            } else if (currentValue != null) {
+                // Searching for annotated fields in nested classes:
+                if (searchPolicy == SearchPolicy.DEEP) {
+                    annotatedValues.addAll(getAnnotatedFields(currentValue, searchPolicy, inspected));
+                }
+            }
+        }
+        return annotatedValues;
+    }
+
+    private static Iterable<Field> gatherFields(Class<?> fromClass) {
+        // Finds ALL fields, even the ones from super classes.
+        final List<Field> fields = new ArrayList<>();
+        while (fromClass != null) {
+            fields.addAll(Arrays.asList(fromClass.getDeclaredFields()));
+            fromClass = fromClass.getSuperclass();
+        }
+        return fields;
+    }
+
 
 }

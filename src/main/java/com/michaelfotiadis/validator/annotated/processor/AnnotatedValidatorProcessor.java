@@ -35,7 +35,6 @@ public final class AnnotatedValidatorProcessor {
     private static final SearchPolicy DEFAULT_SEARCH_POLICY = SearchPolicy.SHALLOW;
 
     private final Map<AnnotationCategory, Validator<?>> validatorMap;
-    private final FieldParser fieldParser;
     private final AnnotationParser annotationParser;
     private FailPolicy failPolicy;
     private SearchPolicy searchPolicy;
@@ -48,7 +47,6 @@ public final class AnnotatedValidatorProcessor {
         this.searchPolicy = searchPolicy;
         this.failPolicy = failPolicy;
         this.validatorMap = new HashMap<>();
-        this.fieldParser = new FieldParser();
         this.annotationParser = new AnnotationParser();
         initValidators();
 
@@ -71,11 +69,19 @@ public final class AnnotatedValidatorProcessor {
                                                    final SearchPolicy searchPolicy,
                                                    final FailPolicy failPolicy) {
 
-        final List<Field> fields = fieldParser.getDeclaredFields(item, searchPolicy);
-
         final ValidationResultsContainer result = new ValidationResultsContainer();
 
+        final List<Field> fields;
+        try {
+            fields = FieldParser.getAnnotatedFields(item, searchPolicy);
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
+            return result;
+        }
+
+
         for (final Field field : fields) {
+            System.out.println("Checking field " + field.getName());
             try {
                 field.setAccessible(true);
                 final List<ValidationResult> results = validateField(item, field);
@@ -140,7 +146,6 @@ public final class AnnotatedValidatorProcessor {
                 } else {
                     result = ValidationResult.success();
                 }
-
                 results.add(result);
             }
 

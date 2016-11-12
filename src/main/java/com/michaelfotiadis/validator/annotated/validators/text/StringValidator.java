@@ -1,5 +1,6 @@
 package com.michaelfotiadis.validator.annotated.validators.text;
 
+import com.michaelfotiadis.validator.annotated.annotations.text.TextDateFormat;
 import com.michaelfotiadis.validator.annotated.annotations.text.TextEmail;
 import com.michaelfotiadis.validator.annotated.annotations.text.TextExactLength;
 import com.michaelfotiadis.validator.annotated.annotations.text.TextIsNumeric;
@@ -13,6 +14,9 @@ import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
 import com.michaelfotiadis.validator.annotated.validators.Validator;
 
 import java.lang.annotation.Annotation;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
@@ -41,6 +45,8 @@ public class StringValidator implements Validator<String> {
             return handleMaxLength(value, ((TextMaxLength) annotation).value());
         } else if (type.equals(TextIsNumeric.class)) {
             return handleIsNumeric(value);
+        } else if (type.equals(TextDateFormat.class)) {
+            return handleIsOfDateFormat(value, ((TextDateFormat) annotation).value());
         } else {
             return ValidationResult.failure();
         }
@@ -143,6 +149,29 @@ public class StringValidator implements Validator<String> {
             return ValidationResult.success();
         }
 
+    }
+
+    private static ValidationResult handleIsOfDateFormat(final String text, final String format) {
+
+        if (format == null || format.length() == 0) {
+            return ValidationResult.failure();
+        } else if (text == null) {
+            return ValidationResult.failure();
+        } else {
+            final Date result;
+            try {
+                result = new SimpleDateFormat(format).parse(text);
+                if (result != null) {
+                    return ValidationResult.success();
+                } else {
+                    return ValidationResult.failure();
+                }
+            } catch (final ParseException e) {
+                return ValidationResult.failure();
+            }
+
+
+        }
     }
 
 }

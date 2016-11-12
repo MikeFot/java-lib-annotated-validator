@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.annotated.processor;
+package com.michaelfotiadis.validator.annotated.validators.numeric;
 
 import com.michaelfotiadis.validator.annotated.ValidationResultsContainer;
 import com.michaelfotiadis.validator.annotated.annotations.general.IsNull;
@@ -11,10 +11,12 @@ import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.In
 import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerMaxValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.IntegerMinValue;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
+import com.michaelfotiadis.validator.annotated.processor.AnnotatedValidatorProcessor;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -24,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 /**
  *
  */
-public class AnnotatedValidatorProcessorNumberTests {
+public class ProcessorNumericValidatorTest {
 
     private static final int INTEGER_MIN = 2;
     private static final int INTEGER_MAX = 10;
@@ -122,10 +124,15 @@ public class AnnotatedValidatorProcessorNumberTests {
     public void doubleMaxValueInRange() throws Exception {
         final SampleNumber item = new SampleNumber();
         item.testDoubleMax = DOUBLE_MAX / 2d;
+        long startTime = Calendar.getInstance().getTimeInMillis();
         final ValidationResultsContainer result = processor.validate(item);
         assertTrue(result.isValid());
 
         final Set<ValidationStatus> statuses = result.getFailedStatuses();
+
+        long endTime = Calendar.getInstance().getTimeInMillis() - startTime;
+
+        System.out.println("Duration= " + endTime);
         assertEquals(0, statuses.size());
     }
 
