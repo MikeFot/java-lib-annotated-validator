@@ -13,38 +13,6 @@ import java.util.List;
  */
 public final class AnnotationParser {
 
-    public static <T> boolean parseAnnotations(final T item) {
-
-        boolean foundAnnotation = false;
-
-        for (final Field f : item.getClass().getDeclaredFields()) {
-            final Annotation[] annotations = f.getDeclaredAnnotations();
-
-            for (final Annotation annotation : annotations) {
-                System.out.println(annotation.getClass().getSimpleName());
-            }
-
-            if (annotations.length != 0 && !foundAnnotation) {
-                foundAnnotation = true;
-            }
-
-        }
-        return foundAnnotation;
-
-    }
-
-
-    /**
-     * Utility method to check if a particular annotation exists within a class
-     *
-     * @param obj            {@link Object} to be evaluated
-     * @param annotationType {@link Class} of the annotation
-     * @return true if annotation exists in class or superclass
-     */
-    public static boolean containsAnnotation(final Object obj, final Class annotationType) throws ReflectiveOperationException {
-        return getAnnotation(obj, annotationType) != null;
-    }
-
     public static Annotation getAnnotation(final Object obj, final Class annotationType) throws ReflectiveOperationException {
 
         final List<Field> fields = FieldParser.getAnnotatedFields(obj, SearchPolicy.DEEP);

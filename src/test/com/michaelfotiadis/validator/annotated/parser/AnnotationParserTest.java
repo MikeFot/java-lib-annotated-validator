@@ -8,30 +8,13 @@ import org.junit.Test;
 import java.lang.annotation.Annotation;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  *
  */
 public class AnnotationParserTest {
 
-    @Test
-    public void containsAnnotation() throws Exception {
-        assertFalse(AnnotationParser.containsAnnotation("Sss".getClass(), IntegerMinValue.class));
-
-        final TestInteger testInteger = new TestInteger();
-        assertTrue(AnnotationParser.containsAnnotation(testInteger.getClass(), IntegerMinValue.class));
-
-    }
-
-    @Test
-    public void containsAnnotationExtended() throws Exception {
-        final ExtendedTestInteger extendedTestInteger = new ExtendedTestInteger();
-        assertTrue(AnnotationParser.containsAnnotation(extendedTestInteger.getClass(), IntegerMinValue.class));
-
-    }
 
     @Test
     public void getCategoryOfAnnotation() throws Exception {
