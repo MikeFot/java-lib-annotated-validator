@@ -1,7 +1,9 @@
 package com.michaelfotiadis.validator.annotated.parser;
 
+import com.michaelfotiadis.validator.annotated.SupportedAnnotationContainer;
 import com.michaelfotiadis.validator.annotated.processor.SearchPolicy;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -160,28 +162,95 @@ public class FieldParser {
 
     private static List<Field> getAnnotatedFields(final Object root,
                                                   final SearchPolicy searchPolicy,
-                                                  final Set<Object> inspected)
-            throws ReflectiveOperationException {
+                                                  final Set<Object> inspected) throws ReflectiveOperationException {
+
+
+
         final List<Field> annotatedValues = new ArrayList<>();
         if (inspected.contains(root)) { // Prevents stack overflow.
+            System.out.println("*** Breaking for already inspected");
             return Collections.emptyList();
         }
-        inspected.add(root);
+        if (isWrapperType(root.getClass())) { // Prevents stack overflow.
+
+            System.out.println("*** Breaking for wrapper class");
+            return Collections.emptyList();
+        }
+
         for (final Field field : gatherFields(root.getClass())) {
+
             field.setAccessible(true);
             final Object currentValue = field.get(root);
             field.setAccessible(false);
             if (field.getAnnotations().length != 0) {
                 // Found required value, search finished:
-                annotatedValues.add(field);
+                for (final Annotation annotation : field.getAnnotations()) {
+                    if (SupportedAnnotationContainer.getSupportedClasses().contains(annotation.annotationType())) {
+                        annotatedValues.add(field);
+                        break;
+                    }
+                }
                 if (currentValue != null) {
                     inspected.add(currentValue);
+
+                    if (searchPolicy == SearchPolicy.DEEP && !isWrapperType(currentValue.getClass())) {
+                        // go deep if current object is iterable
+                        if (currentValue instanceof Map) {
+                            final Map map = (Map) currentValue;
+                            for (final Object value : map.values()) {
+                                if (!isWrapperType(value.getClass())) {
+                                    annotatedValues.addAll(getAnnotatedFields(value, searchPolicy, inspected));
+                                }
+                            }
+                        } else if (currentValue instanceof Collection) {
+                            for (final Object value : (Collection) currentValue) {
+                                if (!isWrapperType(value.getClass())) {
+                                    annotatedValues.addAll(getAnnotatedFields(value, searchPolicy, inspected));
+                                }
+                            }
+                        } else if (currentValue.getClass().isArray()) {
+                            for (final Object value : unpack(currentValue)) {
+                                if (!isWrapperType(value.getClass())) {
+                                    annotatedValues.addAll(getAnnotatedFields(value, searchPolicy, inspected));
+                                }
+                            }
+                        } else {
+                            annotatedValues.addAll(getAnnotatedFields(currentValue, searchPolicy, inspected));
+                        }
+                    }
+
                 }
+
             } else if (currentValue != null) {
+
                 // Searching for annotated fields in nested classes:
-                if (searchPolicy == SearchPolicy.DEEP) {
-                    annotatedValues.addAll(getAnnotatedFields(currentValue, searchPolicy, inspected));
+                if (searchPolicy == SearchPolicy.DEEP && !isWrapperType(currentValue.getClass())) {
+                    // go deep if current object is iterable
+                    if (currentValue instanceof Map) {
+                        final Map map = (Map) currentValue;
+                        for (final Object value : map.values()) {
+                            if (!isWrapperType(value.getClass())) {
+                                annotatedValues.addAll(getAnnotatedFields(value, searchPolicy, inspected));
+                            }
+                        }
+                    } else if (currentValue instanceof Collection) {
+                        for (final Object value : (Collection) currentValue) {
+                            if (!isWrapperType(value.getClass())) {
+                                annotatedValues.addAll(getAnnotatedFields(value, searchPolicy, inspected));
+                            }
+                        }
+                    } else if (currentValue.getClass().isArray()) {
+                        for (final Object value : unpack(currentValue)) {
+                            if (!isWrapperType(value.getClass())) {
+                                annotatedValues.addAll(getAnnotatedFields(value, searchPolicy, inspected));
+                            }
+                        }
+                    } else {
+                        annotatedValues.addAll(getAnnotatedFields(currentValue, searchPolicy, inspected));
+                    }
+                    inspected.add(currentValue);
                 }
+
             }
         }
         return annotatedValues;
@@ -192,6 +261,31 @@ public class FieldParser {
         final List<Field> fields = new ArrayList<>();
         while (fromClass != null) {
             fields.addAll(Arrays.asList(fromClass.getDeclaredFields()));
+
+           /* // go deep if current object is iterable
+            if (currentValue instanceof Map) {
+                final Map map = (Map) currentValue;
+                for (final Object value : map.values()) {
+                    if (!isWrapperType(value.getClass())) {
+                        annotatedValues.addAll(getAnnotatedFields(value, searchPolicy, inspected));
+                    }
+                }
+            } else if (currentValue instanceof Collection) {
+                for (final Object value : (Collection) currentValue) {
+                    if (!isWrapperType(value.getClass())) {
+                        annotatedValues.addAll(getAnnotatedFields(value, searchPolicy, inspected));
+                    }
+                }
+            } else if (currentValue.getClass().isArray()) {
+                for (final Object value : unpack(currentValue)) {
+                    if (!isWrapperType(value.getClass())) {
+                        annotatedValues.addAll(getAnnotatedFields(value, searchPolicy, inspected));
+                    }
+                }
+            }*/
+
+
+
             fromClass = fromClass.getSuperclass();
         }
         return fields;

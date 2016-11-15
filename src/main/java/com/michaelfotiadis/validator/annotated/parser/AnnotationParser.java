@@ -6,13 +6,14 @@ import com.michaelfotiadis.validator.annotated.processor.SearchPolicy;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  *
  */
 public final class AnnotationParser {
 
-    public <T> boolean parseAnnotations(final T item) {
+    public static <T> boolean parseAnnotations(final T item) {
 
         boolean foundAnnotation = false;
 
@@ -36,24 +37,27 @@ public final class AnnotationParser {
     /**
      * Utility method to check if a particular annotation exists within a class
      *
-     * @param obj           {@link Object} to be evaluated
+     * @param obj            {@link Object} to be evaluated
      * @param annotationType {@link Class} of the annotation
      * @return true if annotation exists in class or superclass
      */
-    public boolean containsAnnotation(final Object obj, final Class annotationType) {
+    public static boolean containsAnnotation(final Object obj, final Class annotationType) throws ReflectiveOperationException {
         return getAnnotation(obj, annotationType) != null;
     }
 
-    public Annotation getAnnotation(final Object obj, final Class annotationType) {
-        for (final Field f : new FieldParser().getDeclaredFields(obj, SearchPolicy.SHALLOW)) {
-            if (f.getAnnotation(annotationType) != null) {
+    public static Annotation getAnnotation(final Object obj, final Class annotationType) throws ReflectiveOperationException {
+
+        final List<Field> fields = FieldParser.getAnnotatedFields(obj, SearchPolicy.DEEP);
+
+        for (final Field f : fields) {
+            if (f.getAnnotations().length != 0 && f.getAnnotation(annotationType) != null) {
                 return f.getAnnotation(annotationType);
             }
         }
         return null;
     }
 
-    public AnnotationCategory getCategoryOfAnnotation(final Annotation annotation) {
+    public static AnnotationCategory getCategoryOfAnnotation(final Annotation annotation) {
 
         final Category category = annotation.annotationType().getAnnotation(Category.class);
 

@@ -16,7 +16,7 @@ public class TextNumericValidatorHelperTest {
             "424243.544646",
             "-1",
             "0",
-            "-4343f",
+            "-4343",
             "-0493483434343.23232",
 
     };

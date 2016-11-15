@@ -5,15 +5,13 @@ import com.michaelfotiadis.validator.annotated.annotations.Category;
 import com.michaelfotiadis.validator.annotated.annotations.array.ArrayContainsNoNulls;
 import com.michaelfotiadis.validator.annotated.annotations.array.ArrayContainsValue;
 import com.michaelfotiadis.validator.annotated.annotations.array.ArrayIsNotEmpty;
+import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsClass;
 import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsNoNulls;
-import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsValue;
 import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionIsNotEmpty;
 import com.michaelfotiadis.validator.annotated.annotations.conditional.BooleanEqualsValue;
 import com.michaelfotiadis.validator.annotated.annotations.general.IsNull;
 import com.michaelfotiadis.validator.annotated.annotations.general.NotNull;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.bytenum.ByteEqualsValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.bytenum.ByteMaxValue;
-import com.michaelfotiadis.validator.annotated.annotations.numeric.bytenum.ByteMinValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleEqualsValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleMaxValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.doublenum.DoubleMinValue;
@@ -26,6 +24,7 @@ import com.michaelfotiadis.validator.annotated.annotations.numeric.integernum.In
 import com.michaelfotiadis.validator.annotated.annotations.numeric.shortnum.ShortEqualsValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.shortnum.ShortMaxValue;
 import com.michaelfotiadis.validator.annotated.annotations.numeric.shortnum.ShortMinValue;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextDateFormat;
 import com.michaelfotiadis.validator.annotated.annotations.text.TextEmail;
 import com.michaelfotiadis.validator.annotated.annotations.text.TextExactLength;
 import com.michaelfotiadis.validator.annotated.annotations.text.TextIsNumeric;
@@ -54,7 +53,7 @@ public class SupportedAnnotationContainerTest {
 
         // collection annotations
         checkIsSupported(CollectionContainsNoNulls.class);
-        checkIsSupported(CollectionContainsValue.class);
+        checkIsSupported(CollectionContainsClass.class);
         checkIsSupported(CollectionIsNotEmpty.class);
 
         // array annotations
@@ -70,8 +69,6 @@ public class SupportedAnnotationContainerTest {
         checkIsSupported(NotNull.class);
 
         // Byte annotations
-        checkIsSupported(ByteMinValue.class);
-        checkIsSupported(ByteMaxValue.class);
         checkIsSupported(ByteEqualsValue.class);
 
         // Integer annotations
@@ -95,6 +92,7 @@ public class SupportedAnnotationContainerTest {
         checkIsSupported(ShortEqualsValue.class);
 
         // String annotations
+        checkIsSupported(TextDateFormat.class);
         checkIsSupported(TextEmail.class);
         checkIsSupported(TextExactLength.class);
         checkIsSupported(TextIsNumeric.class);
@@ -112,7 +110,7 @@ public class SupportedAnnotationContainerTest {
 
         // collection annotations
         checkCategory(CollectionContainsNoNulls.class, AnnotationCategory.COLLECTION);
-        checkCategory(CollectionContainsValue.class, AnnotationCategory.COLLECTION);
+        checkCategory(CollectionContainsClass.class, AnnotationCategory.COLLECTION);
         checkCategory(CollectionIsNotEmpty.class, AnnotationCategory.COLLECTION);
 
         // array annotations
@@ -128,8 +126,6 @@ public class SupportedAnnotationContainerTest {
         checkCategory(NotNull.class, AnnotationCategory.GENERAL);
 
         // Byte annotations
-        checkCategory(ByteMinValue.class, AnnotationCategory.BYTE);
-        checkCategory(ByteMaxValue.class, AnnotationCategory.BYTE);
         checkCategory(ByteEqualsValue.class, AnnotationCategory.BYTE);
 
         // Integer annotations
@@ -153,6 +149,7 @@ public class SupportedAnnotationContainerTest {
         checkCategory(ShortEqualsValue.class, AnnotationCategory.SHORT);
 
         // String annotations
+        checkCategory(TextDateFormat.class, AnnotationCategory.STRING);
         checkCategory(TextEmail.class, AnnotationCategory.STRING);
         checkCategory(TextExactLength.class, AnnotationCategory.STRING);
         checkCategory(TextIsNumeric.class, AnnotationCategory.STRING);

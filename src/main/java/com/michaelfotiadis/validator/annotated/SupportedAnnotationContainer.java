@@ -10,12 +10,17 @@ import java.util.List;
 /**
  *
  */
-public class SupportedAnnotationContainer {
+public final class SupportedAnnotationContainer {
 
     private static final String PACKAGE_NAME = "com.michaelfotiadis.validator.annotated.annotations";
     private static final List<Class> SUPPORTED_CLASSES = new ArrayList<>();
 
-    public static boolean isSupported(final Class<?> type) {
+    private SupportedAnnotationContainer() {
+        // NOOP
+    }
+
+    /*package*/
+    static boolean isSupported(final Class<?> type) {
         return getSupportedClasses().contains(type);
     }
 

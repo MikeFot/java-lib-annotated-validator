@@ -1,14 +1,21 @@
 package com.michaelfotiadis.validator.annotated.parser;
 
+import com.michaelfotiadis.validator.annotated.annotations.array.ArrayIsNotEmpty;
+import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsClass;
+import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsNoNulls;
+import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionIsNotEmpty;
 import com.michaelfotiadis.validator.annotated.annotations.text.TextEmail;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextIsNumeric;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextMaxLength;
+import com.michaelfotiadis.validator.annotated.annotations.text.TextNotNullOrEmpty;
 import com.michaelfotiadis.validator.annotated.processor.SearchPolicy;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,13 +31,6 @@ import static org.junit.Assert.assertTrue;
  *
  */
 public class FieldParserTest {
-
-    private FieldParser mFieldParser;
-
-    @Before
-    public void setUp() throws Exception {
-        mFieldParser = new FieldParser();
-    }
 
     @Test
     public void isWrapperType() throws Exception {
@@ -54,7 +54,7 @@ public class FieldParserTest {
 
         final TestItem1 item1 = new TestItem1();
 
-        final List<Field> fields = mFieldParser.getDeclaredFields(item1, SearchPolicy.SHALLOW);
+        final List<Field> fields = FieldParser.getAnnotatedFields(item1, SearchPolicy.SHALLOW);
         assertNotNull(fields);
         for (final Field field : fields) {
             assertNotNull(field);
@@ -69,7 +69,7 @@ public class FieldParserTest {
 
         final TestItem1 item1 = new TestItem1();
 
-        final List<Field> fields = mFieldParser.getDeclaredFields(item1, SearchPolicy.DEEP);
+        final List<Field> fields = FieldParser.getAnnotatedFields(item1, SearchPolicy.DEEP);
         assertNotNull(fields);
         for (final Field field : fields) {
             assertNotNull(field);
@@ -84,7 +84,7 @@ public class FieldParserTest {
 
         final TestArrayItem1 item1 = new TestArrayItem1();
 
-        final List<Field> fields = mFieldParser.getDeclaredFields(item1, SearchPolicy.SHALLOW);
+        final List<Field> fields = FieldParser.getAnnotatedFields(item1, SearchPolicy.SHALLOW);
         assertNotNull(fields);
         for (final Field field : fields) {
             assertNotNull(field);
@@ -99,7 +99,7 @@ public class FieldParserTest {
 
         final TestArrayItem1 item1 = new TestArrayItem1();
 
-        final List<Field> fields = mFieldParser.getDeclaredFields(item1, SearchPolicy.DEEP);
+        final List<Field> fields = FieldParser.getAnnotatedFields(item1, SearchPolicy.DEEP);
         assertNotNull(fields);
         for (final Field field : fields) {
             assertNotNull(field);
@@ -115,7 +115,7 @@ public class FieldParserTest {
 
         final TestArrayItem2 item1 = new TestArrayItem2();
 
-        final List<Field> fields = mFieldParser.getDeclaredFields(item1, SearchPolicy.SHALLOW);
+        final List<Field> fields = FieldParser.getAnnotatedFields(item1, SearchPolicy.SHALLOW);
         assertNotNull(fields);
         for (final Field field : fields) {
             assertNotNull(field);
@@ -130,7 +130,7 @@ public class FieldParserTest {
 
         final TestArrayItem2 item1 = new TestArrayItem2();
 
-        final List<Field> fields = mFieldParser.getDeclaredFields(item1, SearchPolicy.DEEP);
+        final List<Field> fields = FieldParser.getAnnotatedFields(item1, SearchPolicy.DEEP);
         assertNotNull(fields);
         for (final Field field : fields) {
             assertNotNull(field);
@@ -145,14 +145,14 @@ public class FieldParserTest {
 
         final TestTextItemValidInvalidDeep item1 = new TestTextItemValidInvalidDeep();
 
-        final List<Field> fields = mFieldParser.getDeclaredFields(item1, SearchPolicy.DEEP);
+        final List<Field> fields = FieldParser.getAnnotatedFields(item1, SearchPolicy.DEEP);
         assertNotNull(fields);
         for (final Field field : fields) {
             assertNotNull(field);
             System.out.println(field.getDeclaringClass().getSimpleName() + " " + field.getName());
         }
 
-        assertEquals(3, fields.size());
+        assertEquals(2, fields.size());
     }
 
     @Test
@@ -225,26 +225,63 @@ public class FieldParserTest {
     }
 
 
+    @Test
+    public void getValuesShallowLists2Layers() throws Exception {
+
+        final TestNestedLists item = new TestNestedLists();
+
+        final Collection<Field> collection = FieldParser.getAnnotatedFields(item, SearchPolicy.SHALLOW);
+        for (final Field o : collection) {
+            System.out.println(o.getName());
+            for (final Annotation annotation : o.getAnnotations()) {
+                System.out.println(annotation.toString());
+            }
+        }
+        assertNotNull(collection);
+        assertEquals(2, collection.size());
+
+    }
+
+    @Test
+    public void getValuesDeepLists2Layers() throws Exception {
+
+        final TestNestedLists item = new TestNestedLists();
+
+        final Collection<Field> collection = FieldParser.getAnnotatedFields(item, SearchPolicy.DEEP);
+        for (final Field o : collection) {
+            System.out.println(o.getName());
+            for (final Annotation annotation : o.getAnnotations()) {
+                System.out.println(annotation.toString());
+            }
+        }
+        assertNotNull(collection);
+        assertEquals(3, collection.size());
+
+    }
 
     @SuppressWarnings("unused")
     private class TestItem1 {
-        private final String text = "A text";
-        private final int number = 1;
+        @TextMaxLength(10)
+        private static final String text = "A text";
+        @TextIsNumeric
+        private static final int number = 1;
+        @CollectionContainsClass(String.class)
         private final List<String> listString = Collections.singletonList("item");
+        @CollectionContainsNoNulls
         private final List<TestNestedItem1> listItem = Collections.singletonList(new TestNestedItem1());
 
         private int getNumberOfShallowFields() {
-            return 2 + 3;
+            return 4;
         }
 
         private int getNumberOfDeepFields() {
-            return 2 + 5;
+            return 5;
         }
     }
 
     @SuppressWarnings("unused")
     private class TestItem2 extends TestItem1 {
-        private final int number = 2;
+        private static final int number = 2;
 
         private int getNumberOfShallowFields() {
             return 2 + 3;
@@ -257,12 +294,13 @@ public class FieldParserTest {
 
     @SuppressWarnings({"unused", "InnerClassMayBeStatic"})
     private class TestNestedItem1 {
-        private final String text = "B text";
+        @TextNotNullOrEmpty
+        private static final String text = "B text";
     }
 
     @SuppressWarnings("unused")
-    private class TestArrayItem1 {
-
+    private final class TestArrayItem1 {
+        @ArrayIsNotEmpty
         private final TestNestedItem1[] array;
 
         private TestArrayItem1() {
@@ -272,16 +310,16 @@ public class FieldParserTest {
         }
 
         private int getNumberOfShallowFields() {
-            return 1 + 1;
+            return 1;
         }
 
         private int getNumberOfDeepFields() {
-            return 1 + 5;
+            return 3;
         }
     }
 
     @SuppressWarnings("unused")
-    private class TestArrayItem2 {
+    private final class TestArrayItem2 {
 
         private final TestArrayItem1[] array;
 
@@ -292,16 +330,16 @@ public class FieldParserTest {
         }
 
         private int getNumberOfShallowFields() {
-            return 2;
+            return 0;
         }
 
         private int getNumberOfDeepFields() {
-            return 2 + 2 + 5 + 5;
+            return 6;
         }
     }
 
     @SuppressWarnings("unused")
-    private class TestMapItem1 {
+    private final class TestMapItem1 {
 
         private final Map<Integer, TestItem1> map;
 
@@ -313,21 +351,39 @@ public class FieldParserTest {
     }
 
     private static final class TestTextItemInvalid {
-        @TextEmail()
+        @TextEmail
         private static final String textEmailInvalid = "email@domain";
     }
 
     private static final class TestTextItemValidInvalidDeep {
-        @TextEmail()
+        @TextEmail
         private static final String textEmailValid = "email@domain.co.uk";
         private static final TestTextItemInvalid innerInvalidItem = new TestTextItemInvalid();
     }
 
     private static final class TestTextItemValidInvalidInvalidDeep {
-        @TextEmail()
+        @TextEmail
         private static final String textEmailValid = "email@domain.co.uk";
         private static final TestTextItemValidInvalidDeep innerValidInvalidItem = new TestTextItemValidInvalidDeep();
     }
+
+    private static final class TestNestedLists {
+
+        @CollectionIsNotEmpty
+        private static final List<Integer> list1 = Arrays.asList(1, 2, 3, 4);
+
+        @CollectionIsNotEmpty
+        private static final List<NestedListContainer> list2 = Collections.singletonList(new NestedListContainer());
+
+        private static final class NestedListContainer {
+
+            @CollectionIsNotEmpty
+            private static final List<String> list = Arrays.asList("Bob", "Mike");
+
+        }
+
+    }
+
 
 
 }

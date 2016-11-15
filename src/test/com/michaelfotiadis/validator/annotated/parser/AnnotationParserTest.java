@@ -19,19 +19,17 @@ public class AnnotationParserTest {
 
     @Test
     public void containsAnnotation() throws Exception {
-        AnnotationParser parser = new AnnotationParser();
-        assertFalse(parser.containsAnnotation("Sss".getClass(), IntegerMinValue.class));
+        assertFalse(AnnotationParser.containsAnnotation("Sss".getClass(), IntegerMinValue.class));
 
         final TestInteger testInteger = new TestInteger();
-        assertTrue(parser.containsAnnotation(testInteger.getClass(), IntegerMinValue.class));
+        assertTrue(AnnotationParser.containsAnnotation(testInteger.getClass(), IntegerMinValue.class));
 
     }
 
     @Test
     public void containsAnnotationExtended() throws Exception {
         final ExtendedTestInteger extendedTestInteger = new ExtendedTestInteger();
-        AnnotationParser parser = new AnnotationParser();
-        assertTrue(parser.containsAnnotation(extendedTestInteger.getClass(), IntegerMinValue.class));
+        assertTrue(AnnotationParser.containsAnnotation(extendedTestInteger.getClass(), IntegerMinValue.class));
 
     }
 
@@ -41,11 +39,11 @@ public class AnnotationParserTest {
         TestInteger testInteger = new TestInteger();
 
         AnnotationParser parser = new AnnotationParser();
-        Annotation annotation = parser.getAnnotation(testInteger, IntegerMinValue.class);
+        Annotation annotation = AnnotationParser.getAnnotation(testInteger, IntegerMinValue.class);
 
         assertNotNull(annotation);
 
-        AnnotationCategory category = parser.getCategoryOfAnnotation(annotation);
+        AnnotationCategory category = AnnotationParser.getCategoryOfAnnotation(annotation);
 
         assertEquals(AnnotationCategory.INTEGER, category);
 

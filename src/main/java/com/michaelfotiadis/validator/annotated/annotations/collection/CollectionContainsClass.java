@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.annotated.annotations.numeric.bytenum;
+package com.michaelfotiadis.validator.annotated.annotations.collection;
 
 import com.michaelfotiadis.validator.annotated.annotations.AnnotationCategory;
 import com.michaelfotiadis.validator.annotated.annotations.Category;
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Category(type = AnnotationCategory.BYTE)
-public @interface ByteMinValue {
-    byte value();
+@Category(type = AnnotationCategory.COLLECTION)
+public @interface CollectionContainsClass {
+    Class<?> value();
 }

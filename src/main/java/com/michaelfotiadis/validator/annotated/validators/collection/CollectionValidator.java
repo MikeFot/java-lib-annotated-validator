@@ -1,7 +1,7 @@
 package com.michaelfotiadis.validator.annotated.validators.collection;
 
+import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsClass;
 import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsNoNulls;
-import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsValue;
 import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionIsNotEmpty;
 import com.michaelfotiadis.validator.annotated.model.ValidationResult;
 import com.michaelfotiadis.validator.annotated.model.ValidationStatus;
@@ -25,8 +25,8 @@ public class CollectionValidator implements Validator<Collection<?>> {
             return handleIsNotEmpty(collection);
         } else if (type.equals(CollectionContainsNoNulls.class)) {
             return handleContainsNoNulls(collection);
-        } else if (type.equals(CollectionContainsValue.class)) {
-            return handleContainsValue(collection, ((CollectionContainsValue) annotation).value());
+        } else if (type.equals(CollectionContainsClass.class)) {
+            return handleContainsValue(collection, ((CollectionContainsClass) annotation).value());
         } else {
             return ValidationResult.failure();
         }
