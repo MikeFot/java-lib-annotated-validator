@@ -1,4 +1,4 @@
-package com.michaelfotiadis.validator.utils;
+package com.michaelfotiadis.validator.annotated.utils;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package com.michaelfotiadis.validator.annotated;
 
-import com.michaelfotiadis.validator.utils.ReflectionUtils;
+import com.michaelfotiadis.validator.annotated.utils.ReflectionUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
