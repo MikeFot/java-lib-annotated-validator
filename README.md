@@ -12,10 +12,10 @@ Java Validator Library using annotations
 
 `new AnnotatedValidatorProcessor(SearchPolicy searchPolicy, FailPolicy failPolicy)`
 
-Option 1: Instantiate a new #AnnotatedValidatorProcessor# via the `AnnotatedValidatorProcessor()` constructor. 
+**Option 1:** Instantiate a new #AnnotatedValidatorProcessor# via the `AnnotatedValidatorProcessor()` constructor. 
 This will use a default CONTINUE / SHALLOW configutarion.
 
-Option 2: Instantiate a new `AnnotatedValidatorProcessor` via the `AnnotatedValidatorProcessor(SearchPolicy searchPolicy, FailPolicy failPolicy)` constructor.
+**Option 2:** Instantiate a new `AnnotatedValidatorProcessor` via the `AnnotatedValidatorProcessor(SearchPolicy searchPolicy, FailPolicy failPolicy)` constructor.
 This will use the provided parameters 
 
 #### Usage
@@ -23,10 +23,10 @@ This will use the provided parameters
 
 `validate(T item, SearchPolicy searchPolicy, FailPolicy failPolicy)`
 
-Option 1: Use the `validate(T item)` method. 
+**Option 1:** Use the `validate(T item)` method. 
 This will use the `FailPolicy` and `SearchPolicy` defined in the constructor.
 
-Option 2: Use the `validate(T item, SearchPolicy searchPolicy, FailPolicy failPolicy)` method.
+**Option 2:** Use the `validate(T item, SearchPolicy searchPolicy, FailPolicy failPolicy)` method.
 This will override the default `FailPolicy` and `SearchPolicy` with the provided ones.
 
 ##### Parameters
