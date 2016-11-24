@@ -56,37 +56,24 @@ The results can be accessed using the following container methods:
 
 - `ValidationStatus` is an enum attached to results describing the issue. Allowed values are:
     
-    UNDEFINED_FAILURE,
-    
-    NULL_VALUE,
-    
-    EMPTY_COLLECTION,
-    
-    COLLECTION_CONTAINS_NULL,
-    
-    PATTERN_DID_NOT_MATCH,
-    
-    EMPTY_STRING,
-    
-    INVALID_VALUE,
-    
-    WRONG_TYPE_ARGUMENTS,
-    
-    VALUE_OUT_OF_RANGE,
-    
+    ```
+    UNDEFINED_FAILURE,    
+    NULL_VALUE,    
+    EMPTY_COLLECTION,    
+    COLLECTION_CONTAINS_NULL,    
+    PATTERN_DID_NOT_MATCH,    
+    EMPTY_STRING,    
+    INVALID_VALUE,    
+    WRONG_TYPE_ARGUMENTS,    
+    VALUE_OUT_OF_RANGE,    
     NUMBER_OUT_OF_RANGE,
-    
     INTEGER_OUT_OF_RANGE,
-    
     BYTE_OUT_OF_RANGE,
-    
     DOUBLE_OUT_OF_RANGE,
-    
     FLOAT_OUT_OF_RANGE,
-    
     EXCEPTION,
-    
     SUCCESS
+    ```
 
 ##### Sample Objects
 
