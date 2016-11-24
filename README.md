@@ -1,9 +1,7 @@
-# java-lib-annotated-validator
-Java Validator Library using annotations
-
+# Java Annotated Validator Library
+Java Validator Library using custom runtime annotations and reflection
 
 ## Description
-
 
 ### Usage
 
@@ -89,6 +87,34 @@ The results can be accessed using the following container methods:
     EXCEPTION,
     
     SUCCESS
+
+##### Sample Object
+
+`
+private class SampleNumber {
+
+        private static final double EPSILON = 0.0000000001d;
+
+        @IntegerMaxValue(INTEGER_MAX)
+        @IntegerMinValue(INTEGER_MIN)
+        Integer testIntegerMinMax;
+        @IntegerEqualsValue(INTEGER_EQUALS)
+        int testIntegerEquals;
+        @NotNull
+        @DoubleMaxValue(max = DOUBLE_MAX, epsilon = EPSILON)
+        Double testDoubleMax;
+        @DoubleMinValue(min = DOUBLE_MIN, epsilon = EPSILON)
+        double testDoubleMin;
+        @FloatEqualsValue(value = FLOAT_EQUALS, epsilon = EPSILON)
+        float testFloatEquals;
+        @FloatMaxValue(max = FLOAT_EQUALS + 1, epsilon = EPSILON)
+        Float testFloatMax;
+        @IsNull
+        Integer testIsNullInteger;
+
+    }
+`
+
 
 ## Target
 This library is targetting Java 7 for backwards compatibility with Android.
