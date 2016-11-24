@@ -88,32 +88,46 @@ The results can be accessed using the following container methods:
     
     SUCCESS
 
-##### Sample Object
+##### Sample Objects
 
-`
-private class SampleNumber {
+```
+class SampleObject1 {
 
         private static final double EPSILON = 0.0000000001d;
-
-        @IntegerMaxValue(INTEGER_MAX)
-        @IntegerMinValue(INTEGER_MIN)
+        
+        @IntegerMaxValue(20)
+        @IntegerMinValue(0)
         Integer testIntegerMinMax;
-        @IntegerEqualsValue(INTEGER_EQUALS)
+        @IntegerEqualsValue(5)
         int testIntegerEquals;
         @NotNull
-        @DoubleMaxValue(max = DOUBLE_MAX, epsilon = EPSILON)
+        @DoubleMaxValue(max = -4345454.4339493991d, epsilon = EPSILON)
         Double testDoubleMax;
-        @DoubleMinValue(min = DOUBLE_MIN, epsilon = EPSILON)
+        @DoubleMinValue(min = 1232.1d, epsilon = EPSILON)
         double testDoubleMin;
-        @FloatEqualsValue(value = FLOAT_EQUALS, epsilon = EPSILON)
+        @FloatEqualsValue(value = 5f, epsilon = EPSILON)
         float testFloatEquals;
-        @FloatMaxValue(max = FLOAT_EQUALS + 1, epsilon = EPSILON)
+        @FloatMaxValue(max = 24.4f, epsilon = EPSILON)
         Float testFloatMax;
         @IsNull
         Integer testIsNullInteger;
 
-    }
-`
+}
+```
+
+```
+class SampleObject2 {
+        @NotNull
+        @TextDateFormat("yyyy-MM-dd")
+        String textDate;
+        @TextEmail()
+        String textEmail;
+        @TextMinLength(7)
+        String text;
+}
+    
+```
+
 
 
 ## Target
