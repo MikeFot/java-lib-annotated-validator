@@ -114,8 +114,37 @@ class SampleObject2 {
 }
     
 ```
+## Importing into your project
+
+**Gradle**
+
+Add the following to your parent project Gradle file
+
+`allprojects {
+        repositories {
+           maven { url "https://dl.bintray.com/mikefot/maven/" }
+        }
+    }`
 
 
+`compile 'mikefot:com.michaelfotiadis.validator.annotated:1.0'`
+
+**Maven**
+
+`<dependency>
+
+  <groupId>mikefot</groupId>
+  
+  <artifactId>com.michaelfotiadis.validator.annotated</artifactId>
+  
+  <version>1.0</version>
+  
+  <type>pom</type>
+  
+</dependency>`
+
+**Bintray Project**
+https://bintray.com/mikefot/maven/java-lib-annotated-validator
 
 ## Target
 This library is targetting Java 7 for backwards compatibility with Android.
