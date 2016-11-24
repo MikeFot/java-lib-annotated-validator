@@ -20,7 +20,19 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>bintray-mikefot-java-annotated-validator</id>
+            <name>mikefot-java-annotated-validator</name>
+            <url>
+                https://api.bintray.com/maven/mikefot/java-annotated-validator/java-lib-annotated-validator/;publish=1
+            </url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
 
     </dependencies>
 </project>
+
+
