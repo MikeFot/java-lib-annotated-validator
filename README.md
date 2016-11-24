@@ -120,28 +120,28 @@ class SampleObject2 {
 
 Add the following to your parent project Gradle file
 
-`allprojects {
+```
+allprojects {
         repositories {
            maven { url "https://dl.bintray.com/mikefot/maven/" }
         }
-    }`
+    }
+```
 
+And the following to your module Gradle file:
 
 `compile 'mikefot:com.michaelfotiadis.validator.annotated:1.0'`
 
 **Maven**
 
-`<dependency>
-
+```
+<dependency>
   <groupId>mikefot</groupId>
-  
   <artifactId>com.michaelfotiadis.validator.annotated</artifactId>
-  
   <version>1.0</version>
-  
   <type>pom</type>
-  
-</dependency>`
+</dependency>
+```
 
 **Bintray Project**
 https://bintray.com/mikefot/maven/java-lib-annotated-validator
