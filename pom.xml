@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>annotated-validator</groupId>
-    <artifactId>com.michaelfotiadis</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>mikefot</groupId>
+    <artifactId>com.michaelfotiadis.validator.annotated</artifactId>
+    <version>1.0</version>
     <build>
         <plugins>
             <plugin>
@@ -22,10 +22,10 @@
 
     <distributionManagement>
         <repository>
-            <id>bintray-mikefot-java-annotated-validator</id>
-            <name>mikefot-java-annotated-validator</name>
+            <id>bintray-mikefot-maven</id>
+            <name>mikefot-maven</name>
             <url>
-                https://api.bintray.com/maven/mikefot/java-annotated-validator/java-lib-annotated-validator/;publish=1
+                https://api.bintray.com/maven/mikefot/maven/java-lib-annotated-validator/;publish=1
             </url>
         </repository>
     </distributionManagement>

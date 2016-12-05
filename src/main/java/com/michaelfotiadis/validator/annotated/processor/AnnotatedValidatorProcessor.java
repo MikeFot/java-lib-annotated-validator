@@ -74,7 +74,7 @@ public final class AnnotatedValidatorProcessor {
         final List<Field> fields;
         try {
             fields = FieldParser.getAnnotatedFields(item, searchPolicy);
-        } catch (final ReflectiveOperationException e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             return result;
         }
