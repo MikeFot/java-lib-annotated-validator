@@ -95,6 +95,7 @@ The results can be accessed using the following container methods:
 - General
     ```
     @IsNull
+    
     @NotNull
     ```
 - Numeric
