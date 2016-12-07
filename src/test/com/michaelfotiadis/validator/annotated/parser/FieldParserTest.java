@@ -1,8 +1,8 @@
 package com.michaelfotiadis.validator.annotated.parser;
 
 import com.michaelfotiadis.validator.annotated.annotations.array.ArrayIsNotEmpty;
-import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsClass;
 import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsNoNulls;
+import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsValue;
 import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionIsNotEmpty;
 import com.michaelfotiadis.validator.annotated.annotations.text.TextEmail;
 import com.michaelfotiadis.validator.annotated.annotations.text.TextIsNumeric;
@@ -265,7 +265,7 @@ public class FieldParserTest {
         private static final String text = "A text";
         @TextIsNumeric
         private static final int number = 1;
-        @CollectionContainsClass(String.class)
+        @CollectionContainsValue(String.class)
         private final List<String> listString = Collections.singletonList("item");
         @CollectionContainsNoNulls
         private final List<TestNestedItem1> listItem = Collections.singletonList(new TestNestedItem1());

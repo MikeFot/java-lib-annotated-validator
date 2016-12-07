@@ -78,32 +78,26 @@ The results can be accessed using the following container methods:
 ##### Annotations
 - Array
     ```
-    
-    @ArrayContainsNoNulls
-    @ArrayContainsValue(Class<?> value)
-    @ArrayIsNotEmpty
-    
+    @ArrayContainsNoNulls // none of the array items can be null
+    @ArrayContainsValue(Class<?> value) // checks if array contains the given value, uses equals()
+    @ArrayIsNotEmpty // the length of the array cannot be 0
     ```
 - Collection
     ```
     
-    @CollectionContainsClass(Class<?> value)
-    @CollectionContainsNoNulls
-    @CollectionIsNotEmpty
+    @CollectionContainsValue(Class<?> value) // checks if the collection contains the given value, uses equals()
+    @CollectionContainsNoNulls // none of the items in the collection can be null
+    @CollectionIsNotEmpty // collection size must not be 0
     
     ```
 - Conditional
     ```
-    
-    @BooleanEqualsValue(boolean value)
-    
+    @BooleanEqualsValue(boolean value) // boolean equals given value (true / false)
     ```
 - General
     ```
-    
-    @IsNull
-    @NotNull
-    
+    @IsNull // object must be null
+    @NotNull // object must not be null
     ```
 - Numeric
     ```
@@ -128,15 +122,15 @@ The results can be accessed using the following container methods:
 - Text
     ```
     
-    @TextDateFormat(String value)
-    @TextEmail
-    @TextExactLength(int value)
-    @TextIsNumeric
-    @TextMatchesExpression(String expression)
-    @TextMaxLength(int value)
-    @TextMinLength(int value)
-    @TextNotNullOrEmpty
-    @TextUrl
+    @TextDateFormat(String value) // String can be parsed as the given pattern
+    @TextEmail // String can be formatted as email
+    @TextExactLength(int value) // String has the exact given length
+    @TextIsNumeric // String can be parsed as a number
+    @TextMatchesExpression(String expression) // String matches reqular expression
+    @TextMaxLength(int value) // String has the given maximum length
+    @TextMinLength(int value) // String has the given minimum length
+    @TextNotNullOrEmpty // String cannot be null or with 0 length
+    @TextUrl // String can be parsed as URL
     
     ```
 
@@ -195,7 +189,7 @@ allprojects {
 
 And the following to your module Gradle file:
 
-`compile 'mikefot:com.michaelfotiadis.validator.annotated:1.0.1'`
+`compile 'mikefot:com.michaelfotiadis.validator.annotated:1.0.2'`
 
 **Maven**
 
@@ -203,7 +197,7 @@ And the following to your module Gradle file:
 <dependency>
   <groupId>mikefot</groupId>
   <artifactId>com.michaelfotiadis.validator.annotated</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -212,7 +206,8 @@ And the following to your module Gradle file:
 https://bintray.com/mikefot/maven/java-lib-annotated-validator
 
 ## Versions
+- 1.0.2 : Renamed the CollectionsContainsClass annotation to CollectionsContainsValue
 - 1.0.1 : Fixed an issue with pre-19 Android devices caused by ReflectiveOperationException
 
 ## Target
-This library is targetting Java 7 for backwards compatibility with Android.
+This library is targeting Java 7 for backwards compatibility with Android.

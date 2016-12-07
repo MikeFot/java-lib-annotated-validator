@@ -5,8 +5,8 @@ import com.michaelfotiadis.validator.annotated.annotations.Category;
 import com.michaelfotiadis.validator.annotated.annotations.array.ArrayContainsNoNulls;
 import com.michaelfotiadis.validator.annotated.annotations.array.ArrayContainsValue;
 import com.michaelfotiadis.validator.annotated.annotations.array.ArrayIsNotEmpty;
-import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsClass;
 import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsNoNulls;
+import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionContainsValue;
 import com.michaelfotiadis.validator.annotated.annotations.collection.CollectionIsNotEmpty;
 import com.michaelfotiadis.validator.annotated.annotations.conditional.BooleanEqualsValue;
 import com.michaelfotiadis.validator.annotated.annotations.general.IsNull;
@@ -53,7 +53,7 @@ public class SupportedAnnotationContainerTest {
 
         // collection annotations
         checkIsSupported(CollectionContainsNoNulls.class);
-        checkIsSupported(CollectionContainsClass.class);
+        checkIsSupported(CollectionContainsValue.class);
         checkIsSupported(CollectionIsNotEmpty.class);
 
         // array annotations
@@ -110,7 +110,7 @@ public class SupportedAnnotationContainerTest {
 
         // collection annotations
         checkCategory(CollectionContainsNoNulls.class, AnnotationCategory.COLLECTION);
-        checkCategory(CollectionContainsClass.class, AnnotationCategory.COLLECTION);
+        checkCategory(CollectionContainsValue.class, AnnotationCategory.COLLECTION);
         checkCategory(CollectionIsNotEmpty.class, AnnotationCategory.COLLECTION);
 
         // array annotations
