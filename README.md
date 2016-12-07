@@ -78,25 +78,32 @@ The results can be accessed using the following container methods:
 ##### Annotations
 - Array
     ```
+    
     @ArrayContainsNoNulls
     @ArrayContainsValue(Class<?> value)
     @ArrayIsNotEmpty
+    
     ```
 - Collection
     ```
+    
     @CollectionContainsClass(Class<?> value)
     @CollectionContainsNoNulls
     @CollectionIsNotEmpty
+    
     ```
 - Conditional
     ```
+    
     @BooleanEqualsValue(boolean value)
+    
     ```
 - General
     ```
-    @IsNull
     
+    @IsNull
     @NotNull
+    
     ```
 - Numeric
     ```
@@ -120,6 +127,7 @@ The results can be accessed using the following container methods:
     ```
 - Text
     ```
+    
     @TextDateFormat(String value)
     @TextEmail
     @TextExactLength(int value)
@@ -129,6 +137,7 @@ The results can be accessed using the following container methods:
     @TextMinLength(int value)
     @TextNotNullOrEmpty
     @TextUrl
+    
     ```
 
 ##### Sample Objects
