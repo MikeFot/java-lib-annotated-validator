@@ -35,7 +35,6 @@ public final class AnnotatedValidatorProcessor {
     private static final SearchPolicy DEFAULT_SEARCH_POLICY = SearchPolicy.SHALLOW;
 
     private final Map<AnnotationCategory, Validator<?>> validatorMap;
-    private final AnnotationParser annotationParser;
     private final FailPolicy failPolicy;
     private final SearchPolicy searchPolicy;
 
@@ -47,7 +46,6 @@ public final class AnnotatedValidatorProcessor {
         this.searchPolicy = searchPolicy;
         this.failPolicy = failPolicy;
         this.validatorMap = new HashMap<>();
-        this.annotationParser = new AnnotationParser();
         initValidators();
 
     }

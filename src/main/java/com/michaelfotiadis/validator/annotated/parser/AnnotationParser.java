@@ -13,7 +13,8 @@ import java.util.List;
  */
 public final class AnnotationParser {
 
-    public static Annotation getAnnotation(final Object obj, final Class annotationType) throws ReflectiveOperationException {
+    /*package*/
+    static Annotation getAnnotation(final Object obj, final Class annotationType) throws ReflectiveOperationException {
 
         final List<Field> fields = FieldParser.getAnnotatedFields(obj, SearchPolicy.DEEP);
 

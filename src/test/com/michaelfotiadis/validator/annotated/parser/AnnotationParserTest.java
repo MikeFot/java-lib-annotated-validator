@@ -21,7 +21,6 @@ public class AnnotationParserTest {
 
         TestInteger testInteger = new TestInteger();
 
-        AnnotationParser parser = new AnnotationParser();
         Annotation annotation = AnnotationParser.getAnnotation(testInteger, IntegerMinValue.class);
 
         assertNotNull(annotation);
