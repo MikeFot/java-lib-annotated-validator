@@ -75,6 +75,61 @@ The results can be accessed using the following container methods:
     SUCCESS
     ```
 
+##### Annotations
+- Array
+    ```
+    @ArrayContainsNoNulls
+    @ArrayContainsValue(Class<?> value)
+    @ArrayIsNotEmpty
+    ```
+- Collection
+    ```
+    @CollectionContainsClass(Class<?> value)
+    @CollectionContainsNoNulls
+    @CollectionIsNotEmpty
+    ```
+- Conditional
+    ```
+    @BooleanEqualsValue(boolean value)
+    ```
+- General
+    ```
+    @IsNull
+    @NotNull
+    ```
+- Numeric
+    ```
+    @ByteEqualsValue(byte value)
+
+    @DoubleEqualsValue(double value, double epsilon)
+    @DoubleMaxValue(double max, double epsilon)
+    @DoubleMinValue(double min, double epsilon)
+
+    @FloatEqualsValue(float value, double epsilon)
+    @FloatMaxValue(float max, double epsilon)
+    @FloatMinValue(float min, double epsilon)
+
+    @IntegerEqualsValue(int value)
+    @IntegerMaxValue(int value)
+    @IntegerMinValue(int value)
+
+    @ShortEqualsValue(int value)
+    @ShortMaxValue(int value)
+    @ShortMinValue(int value)
+    ```
+- Text
+    ```
+    @TextDateFormat(String value)
+    @TextEmail
+    @TextExactLength(int value)
+    @TextIsNumeric
+    @TextMatchesExpression(String expression)
+    @TextMaxLength(int value)
+    @TextMinLength(int value)
+    @TextNotNullOrEmpty
+    @TextUrl
+    ```
+
 ##### Sample Objects
 
 ```
@@ -130,7 +185,7 @@ allprojects {
 
 And the following to your module Gradle file:
 
-`compile 'mikefot:com.michaelfotiadis.validator.annotated:1.0'`
+`compile 'mikefot:com.michaelfotiadis.validator.annotated:1.0.1'`
 
 **Maven**
 
@@ -138,13 +193,16 @@ And the following to your module Gradle file:
 <dependency>
   <groupId>mikefot</groupId>
   <artifactId>com.michaelfotiadis.validator.annotated</artifactId>
-  <version>1.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ```
 
 **Bintray Project**
 https://bintray.com/mikefot/maven/java-lib-annotated-validator
+
+## Versions
+- 1.0.1 : Fixed an issue with pre-19 Android devices caused by ReflectiveOperationException
 
 ## Target
 This library is targetting Java 7 for backwards compatibility with Android.
