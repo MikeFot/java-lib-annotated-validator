@@ -78,9 +78,11 @@ The results can be accessed using the following container methods:
 ##### Annotations
 - Array
     ```
+    
     @ArrayContainsNoNulls // none of the array items can be null
     @ArrayContainsValue(Class<?> value) // checks if array contains the given value, uses equals()
     @ArrayIsNotEmpty // the length of the array cannot be 0
+    
     ```
 - Collection
     ```
@@ -92,12 +94,16 @@ The results can be accessed using the following container methods:
     ```
 - Conditional
     ```
+    
     @BooleanEqualsValue(boolean value) // boolean equals given value (true / false)
+    
     ```
 - General
     ```
+    
     @IsNull // object must be null
     @NotNull // object must not be null
+    
     ```
 - Numeric
     ```
