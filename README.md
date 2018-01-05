@@ -211,6 +211,8 @@ And the following to your module Gradle file:
 **Bintray Project**
 https://bintray.com/mikefot/maven/java-lib-annotated-validator
 
+[![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-Java%20Annotated%20Object%20Validator-green.svg?style=flat )]( https://android-arsenal.com/details/1/6627 )
+
 ## Versions
 - 1.0.2 : Renamed the CollectionsContainsClass annotation to CollectionsContainsValue
 - 1.0.1 : Fixed an issue with pre-19 Android devices caused by ReflectiveOperationException
